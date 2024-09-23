@@ -1,63 +1,28 @@
 <?php
-    if ($_SESSION["rol_id"]==1){
-        ?>
+        require_once("../../config/conexion.php");
+        require_once("../../models/usuarioModel.php");
+        $usuario = new Usuario();
+        $datos=$usuario->get_permisos_usuario($_SESSION["enlace"]);  
+
+
+        if(is_array($datos)==true and count($datos)>0)
+        {?>
             <nav class="side-menu">
-                <ul class="side-menu-list">
-                    <li class="blue-dirty">
-                        <a href="..\Home\">
-                            <span class="glyphicon glyphicon-th"></span>
-                            <span class="lbl">Inicio</span>
-                        </a>
-                    </li>
-
-                    <li class="blue-dirty">
-                        <a href="..\NuevoTicket\">
-                            <span class="glyphicon glyphicon-th"></span>
-                            <span class="lbl">Nuevo Ticket</span>
-                        </a>
-                    </li>
-
-                    <li class="blue-dirty">
-                        <a href="..\ConsultarTicket\">
-                            <span class="glyphicon glyphicon-th"></span>
-                            <span class="lbl">Consultar Ticket</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <ul class="side-menu-list">
         <?php
-    }elseif ($_SESSION["rol_id"] == 0){
-        ?>
-            <nav class="side-menu">
-                <ul class="side-menu-list">
-                    <li class="blue-dirty">
-                        <a href="..\Home\">
-                            <span class="glyphicon glyphicon-th"></span>
-                            <span class="lbl">Inicio</span>
-                        </a>
-                    </li>
-
-                    <li class="blue-dirty">
-                        <a href="..\NuevoTicket\">
-                            <span class="glyphicon glyphicon-th"></span>
-                            <span class="lbl">Nuevo Ticket</span>
-                        </a>
-                    </li>
-
-                    <li class="blue-dirty">
-                        <a href="..\MntUsuario\">
-                            <span class="glyphicon glyphicon-th"></span>
-                            <span class="lbl">Mantenimiento Usuario</span>
-                        </a>
-                    </li>
-                    <li class="blue-dirty">
-                        <a href="..\ConsultarTicket\">
-                            <span class="glyphicon glyphicon-th"></span>
-                            <span class="lbl">Consultar Ticket</span>
-                        </a>
-                    </li>
-                </ul>
+            foreach($datos as $row)
+            {?>
+                <li class="blue-dirty">
+                    <a href="..\Home\home.php">
+                        <span class="<?php echo $row["icon_permiso"] ?>"></span>
+                        <span class="lbl"><?php echo $row["nombre_permiso"] ?></span>
+                    </a>
+                </li>
+            <?php
+            }?>
+            </ul>
             </nav>
-        <?php
-    }
+        <?php    
+        }
 ?>
+
