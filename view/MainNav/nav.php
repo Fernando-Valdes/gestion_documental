@@ -13,7 +13,7 @@
             foreach($datos as $row)
             {?>
                 <li class="blue-dirty">
-                    <a href="..\Home\home.php">
+                    <a href="<?php echo $row["href_permiso"] ?>">
                         <span class="<?php echo $row["icon_permiso"] ?>"></span>
                         <span class="lbl"><?php echo $row["nombre_permiso"] ?></span>
                     </a>
@@ -26,3 +26,4 @@
         }
 ?>
 
+ 
