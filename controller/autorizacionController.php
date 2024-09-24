@@ -21,6 +21,7 @@
                 $_SESSION["materno"] = $row["materno"];
                 $_SESSION["email"] = $row["email"];
                 $_SESSION["puesto_usuario"] = $row["puesto_usuario"];
+                $_SESSION["fk_organo"] = $row["fk_organo"];
                 $_SESSION["id_rol"] = $row["id_rol"];
                 $_SESSION["nombre_rol"] = $row["nombre_rol"];
                 $_SESSION["nombre_corto_rol"] = $row["nombre_corto_rol"];

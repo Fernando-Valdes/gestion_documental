@@ -10,6 +10,7 @@ CREATE TABLE cat_usuario
     materno VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
     puesto_usuario VARCHAR(250) NOT NULL,
+    fk_organo INT DEFAULT 0,
     activo_usuario INT DEFAULT 1,
     PRIMARY KEY (enlace)
 );
@@ -159,10 +160,10 @@ CREATE TABLE cat_subserie
 INSERT INTO cat_permiso
     (nombre_permiso,descripcion_permiso,icon_permiso,href_permiso) 
 VALUES 
-    ('Inicio', 'Panel Inicial del Sistema','glyphicon glyphicon-home','..\Home\home.php'),
+    ('Inicio', 'Panel Inicial del Sistema','glyphicon glyphicon-home','../Home/home.php'),
     ('Documentos Recibidos', 'Administración de los documentos recibidos','glyphicon glyphicon-folder-open',''),
     ('Documentos Producidos','Administración de los documentos producidos','glyphicon glyphicon-file',''),
-    ('Clasificación archivistica', 'Cuadro de clasificación archivistica del área','glyphicon glyphicon-list-alt',''),
+    ('Clasificación archivistica', 'Cuadro de clasificación archivistica del área','glyphicon glyphicon-list-alt','../Clasificacion_archivistica/cuadro_clasificacion.php'),
     ('Órgano generador', 'Administración de los órganos generadores de información','glyphicon glyphicon-briefcase',''),
     ('Catálogos', 'Administración de los catálogos existentes','glyphicon glyphicon-list',''),
     ('Usuarios', 'Administración de los usuarios del sistema','glyphicon glyphicon-user',''),

@@ -2,7 +2,18 @@ function init(){
    
 }
 
-$(document).ready(function(){
+$(document).ready(function()
+{
+    var Id_Organo_User = $('#organo_idUser').val();
+
+    
+    if(Id_Organo_User == 0)
+    {
+        $('#modalActualizarOrgano').modal('show');
+    }
+
+
+
     var usu_id = $('#user_idx').val();
 
         $.post("../../controller/usuario.php?op=total", {usu_id:usu_id}, function (data) {

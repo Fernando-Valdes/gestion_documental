@@ -32,8 +32,9 @@
 
                 <div class="mobile-menu-right-overlay"></div>
 
-                <input type="hidden" id="user_idx" value="<?php echo $_SESSION["enlace"] ?>"><!-- ID del Usuario-->
-                <input type="hidden" id="rol_idx" value="<?php echo $_SESSION["id_rol"] ?>"><!-- Rol del Usuario-->
+                <input type="hidden" id="user_idx" value="<?php echo $_SESSION["enlace"] ?>">
+                <input type="hidden" id="rol_idx" value="<?php echo $_SESSION["id_rol"] ?>">
+                <input type="hidden" id="organo_idUser" value="<?php echo $_SESSION["fk_organo"] ?>">
 
                 <div class="dropdown dropdown-typical">
                     <a href="#" class="dropdown-toggle no-arr">
