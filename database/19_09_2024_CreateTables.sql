@@ -5,6 +5,7 @@ SET COLLATION_CONNECTION = 'utf8mb4_spanish2_ci';
 CREATE TABLE cat_usuario
 (
     enlace INT,
+    prefijo VARCHAR(10) NULL,
     nombre VARCHAR(250) NOT NULL,
     paterno VARCHAR(250) NOT NULL,
     materno VARCHAR(250) NOT NULL,
@@ -52,6 +53,33 @@ CREATE TABLE cat_rol_usuario
     FOREIGN KEY (fk_rol_usuario) REFERENCES cat_rol(id_rol)
 );
 
+CREATE TABLE cat_fondo
+(
+    id_fondo INT AUTO_INCREMENT,
+    logo LONGBLOB, 
+    fondo VARCHAR(250) NOT NULL,
+    clave_fondo VARCHAR(100) NOT NULL,
+    fk_user_presidencia INT,
+    fk_user_uaa INT,
+    fk_user_coordinacion_archivo INT,
+    activo_fondo INT DEFAULT 1,
+    PRIMARY KEY (id_fondo),
+    FOREIGN KEY (fk_user_presidencia) REFERENCES cat_usuario(enlace),
+    FOREIGN KEY (fk_user_uaa) REFERENCES cat_usuario(enlace),
+    FOREIGN KEY (fk_user_coordinacion_archivo) REFERENCES cat_usuario(enlace),
+);
+
+CREATE TABLE cat_subfondo
+(
+    id_subfondo INT AUTO_INCREMENT,
+    clave_subfondo VARCHAR(50),
+    subfondo VARCHAR(250) NOT NULL,
+    activo_subfondo INT DEFAULT 1,
+    fk_fondo INT,
+    PRIMARY KEY (id_subfondo),
+    FOREIGN KEY (fk_fondo) REFERENCES cat_fondo(id_fondo)
+);
+
 CREATE TABLE cat_organo_generador
 (
     id_organo INT AUTO_INCREMENT,
@@ -59,35 +87,13 @@ CREATE TABLE cat_organo_generador
     organo_generador VARCHAR(250) NOT NULL,
     seccion VARCHAR(100) NOT NULL,
     activo_organo INT DEFAULT 1,
-    fk_enlace_usuario INT,
+    fk_user_organo_generador INT,
+    fk_user_responsable_archivo INT,
+    fk_subfondo INT,
     PRIMARY KEY (id_organo),
-    FOREIGN KEY (fk_enlace_usuario) REFERENCES cat_usuario(enlace)
-);
-
-CREATE TABLE cat_fondo
-(
-    id_fondo INT AUTO_INCREMENT,
-    logo LONGBLOB, 
-    fondo VARCHAR(250) NOT NULL,
-    clave_fondo VARCHAR(100) NOT NULL,
-    nombre_presidencia VARCHAR(250) NOT NULL,
-    puesto_presidencia VARCHAR(250) NOT NULL,
-    nombre_uaa VARCHAR(250) NOT NULL,
-    puesto_uaa VARCHAR(250) NOT NULL,
-    nombre_coordinacion_archivo VARCHAR(250) NOT NULL,
-    puesto_coordicacion_archivo VARCHAR(250) NOT NULL,
-    activo_fondo INT DEFAULT 1,
-    PRIMARY KEY (id_fondo)
-);
-
-CREATE TABLE cat_subfondo
-(
-    id_subfondo INT AUTO_INCREMENT,
-    subfondo VARCHAR(250) NOT NULL,
-    activo_subfondo INT DEFAULT 1,
-    fk_fondo INT,
-    PRIMARY KEY (id_subfondo),
-    FOREIGN KEY (fk_fondo) REFERENCES cat_fondo(id_fondo)
+    FOREIGN KEY (fk_user_organo_generador) REFERENCES cat_usuario(enlace),
+    FOREIGN KEY (fk_user_responsable_archivo) REFERENCES cat_usuario(enlace),
+    FOREIGN KEY (fk_subfondo) REFERENCES cat_subfondo(id_subfondo)
 );
 
 CREATE TABLE cat_valor_documental
@@ -116,14 +122,11 @@ CREATE TABLE cat_serie
     tiene_valor_serie INT NOT NULL,
     conservacion_serie INT NOT NULL,
     eliminacion_serie INT NOT NULL,
-    responsable_serie_archivo_tramite VARCHAR(250) NOT NULL,
     fk_organo_genera INT,
-    fk_fondo INT,
     fk_valor_serie INT,
     fk_enlace_genera_serie INT,
     PRIMARY KEY (id_serie),
     FOREIGN KEY (fk_organo_genera) REFERENCES cat_organo_generador(id_organo),
-    FOREIGN key (fk_fondo) REFERENCES cat_fondo(id_fondo),
     FOREIGN key (fk_valor_serie) REFERENCES cat_valor_documental(id_valor),
     FOREIGN key (fk_enlace_genera_serie) REFERENCES cat_usuario(enlace)
 );
@@ -146,7 +149,6 @@ CREATE TABLE cat_subserie
     tiene_valor_subserie INT NOT NULL,
     conservacion_subserie INT NOT NULL,
     eliminacion_subserie INT NOT NULL,
-    responsable_subserie_archivo_tramite VARCHAR(250) NOT NULL,
     fk_valor_subserie INT,
     fk_serie INT,
     fk_enlace_genera_subserie INT,
@@ -200,4 +202,63 @@ VALUES
     (7,1),
     (7,3),
     (8,1);
+
+INSERT INTO cat_usuario
+    (enlace,prefijo,nombre,paterno,materno,email,puesto_usuario)
+VALUES
+    (1,'DRA','SUSANA','SARMIENTO','LOPEZ','susana.sarmiento@hotmail.com','MAGISTRADA PRESIDENTA'),
+    (101,'L.C.P.','OSCAR MARIO','ORANTES','COUTIÑO','oscarmorantes10@hotmail.com','JEFE DE LA UNIDAD DE APOYO ADMINISTRATIVO'),
+    (43,'L.A.E.','JOSE EUSTAQUIO','GOMEZ','TRUJILLO','jgomezovcpalenque@gmail.com','JEFE DEL AREA DE FINANCIEROS'),
+    (118,'L.A.E.','MARIA DEL ROSARIO','AVENDAÑO','PEREZ','marosaven@hotmail.com','JEFA DEL AREA DE RECURSOS MATERIALES Y SERVICIOS GENERALES'),
+    (99,'L.D.','JOSUE','CASTILLO','MELCHOR','joscasmel@gmail.com','JEFE DEL AREA DE RECURSOS HUMANOS'),
+    (51,'I.S.C.','LUIS ENRIQUE','ALVAREZ','GONZALEZ','GONZALEZ','JEFE DEL AREA DE INFORMATICA'),
+    (46,'DR.','FERNANDO','CASTELLANOS','COUTIÑO','tribunaldejusticiachiapas@gmail.com','JEFE DEL AREA DE PLANEACION'),
+    (85,'L.D.','ALEJANDRO','GONZALEZ','RUIZ','ale.asistenciajuridica@gmail.com','JEFE DE LA UNIDAD DE TRANSPARENCIA'),
+    (48,'L.D.','MARCO ANTONIO','SARMIENTO','GALLEGOS','sargama1@gmail.com','JEFE DEL AREA DE CONTRALORIA'),
+    (128,'L.C.C.','ANGEL GABRIEL','COBAXIN','RAMOS','acobax@gmail.com','JEFE DEL AREA DE COMUNICACION SOCIAL'),
+    (126,'MTRO.','OSCAR EDUARDO','TREJO','CRUZ','otrejo2112@gmail.com','JEFE DEL AREA DE DEFENSORIA DE OFICIO'),
+    (74,'L.D.','FABIOLA','SIMUTA','SANDOVAL','fabi_04@hotmail.com','JEFA DEL AREA DE COORDINADORA DE ARCHIVOS'),
+    (101,'L.C.P.','OSCAR MARIO','ORANTES','COUTIÑO','oscarmorantes10@hotmail.com','JEFE DE LA UNIDAD DE APOYO ADMINISTRATIVO'),
+    (30,'L.D.','EUGENIA CANDELARIA','MORENO','CASTILLO','eugenia.castillo.ta@gmail.com','PRESIDENTA COMITÉ DE IGUALDAD Y DERECHOS HUMANOS'),
+    (72,'MTRA.','MONICA DE JESUS','TREJO','VELAZQUEZ','acinom2009@live.com.mx','PRESIDENTA COMITÉ DE ÉTICA Y CONDUCTA'),
+    (1,'DRA','SUSANA','SARMIENTO','LOPEZ','susana.sarmiento@hotmail.com','MAGISTRADA PRESIDENTA'),
+    (82,'DR.','VICTOR MARCELO','RUIZ','REYNA','vruiz1974@gmail.com','PRESIDENTE SALA DE REVISIÓN'),
+    (78,'L.D.','LISANDRO ARTURO','CERVANTES','GONZALEZ','lisandrocervantes27@gmail.com','JUEZ JUZGADO DE JURISDICCIÓN ADMINISTRATIVA'),
+    (80,'MTRO.','ELMAR MARIO','GUIRAO','MALDONADO','andariego38@hotmail.com','JUEZ JUZGADO ESPECIALIZADO EN RESPONSABILIDAD ADMINISTRATIVA');
+
+INSERT INTO cat_fondo
+    (fondo,clave_fondo,fk_user_presidencia,fk_user_uaa,fk_user_coordinacion_archivo)
+VALUES 
+    ('TRIBUNAL ADMINISTRATIVO DEL PODER JUDICIAL DEL ESTADO DE CHIAPAS','TAPJE',1,101,74);
+
+INSERT INTO cat_subfondo
+    (clave_subfondo,subfondo,fk_fondo)
+VALUES
+    ('01','PLENO DEL TRIBUNAL ADMINISTRATIVO', 1),
+    ('02','ÓRGANOS JURISDICCIONALES', 1);
+
+INSERT INTO cat_organo_generador
+    (clave_organo,organo_generador,seccion,fk_user_organo_generador,fk_user_responsable_archivo, fk_subfondo)
+VALUES 
+    ('01','PRESIDENCIA DEL PLENO','',1,,)
+    ('02','UNIDAD DE APOYO ADMINISTRATIVO','',,,)
+    ('03','ÁREA DE RECURSOS FINANCIEROS','',,,)
+    ('04','ÁREA DE RECURSOS MATERIALES Y SERVICIOS GENERALES','',,,)
+    ('05','ÁREA DE RECURSOS HUMANOS','',,,)
+    ('06','ÁREA DE INFORMÁTICA','',,,)
+    ('07','ÁREA DE PLANEACIÓN','',,,)
+    ('08','UNIDAD DE TRANSPARENCIA','',,,)
+    ('09','CONTRALORÍA','',,,)
+    ('10','ÁREA DE COMUNICACIÓN SOCIAL','',,,)
+    ('11','ÁREA DE DEFENSORÍA DE OFICIO','',,,)
+    ('12','ÁREA COORDINADORA DE ARCHIVOS','',,,)
+    ('13','FONDO AUXILIAR','',,,)
+    ('14','COMITÉ DE IGUALDAD Y DERECHOS HUMANOS','',,,)
+    ('15','COMITÉ DE ÉTICA Y CONDUCTA','',,,)
+    ('16','COMITÉ DEL VOLUNTARIADO DE CORAZÓN','',,,)
+    ('01','SALA DE REVISIÓN','',,,)
+    ('02','JUZGADO DE JURISDICCIÓN ADMINISTRATIVA','',,,)
+    ('03','JUZGADO ESPECIALIZADO EN RESPONSABILIDAD ADMINISTRATIVA','',,,)
+
+
 

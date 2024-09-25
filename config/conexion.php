@@ -25,7 +25,7 @@ class Conectar
                         $this->dbh = new PDO("mysql:host=127.0.0.1;dbname=siga_administrativo", "root", "");
                         break;
                 }
-            } else 
+            } else if ($this->configMysql == "Production") 
             {
                 switch ($db) 
                 {
