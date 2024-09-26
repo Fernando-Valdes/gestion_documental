@@ -10,14 +10,12 @@
 
                     <div class="form-group">
                         <label class="form-label" for="usu_nom">Nombre</label>
-                        <input type="text" class="form-control" id="usu_nom" name="usu_nom" placeholder="Ingrese Nombre" required>
+                        <input type="text" class="form-control" id="usu_nom" name="usu_nom" placeholder="Ingrese Nombre" readonly>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label" for="rol_id">Rol</label>
-                        <select class="select2" id="rol_id" name="rol_id">
-                            <option value="1">Usuario</option>
-                            <option value="0">Administrador</option>
+                        <select class="select2" id="Ubicaciones" name="Ubicaciones">
                         </select>
                     </div>
                 </div>

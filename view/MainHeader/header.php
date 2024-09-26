@@ -35,6 +35,7 @@
                 <input type="hidden" id="user_idx" value="<?php echo $_SESSION["enlace"] ?>">
                 <input type="hidden" id="rol_idx" value="<?php echo $_SESSION["id_rol"] ?>">
                 <input type="hidden" id="organo_idUser" value="<?php echo $_SESSION["fk_organo"] ?>">
+                <input type="hidden" id="NombreUSer" value="<?php echo $_SESSION["nombre"] ?> <?php echo $_SESSION["paterno"] ?> <?php echo $_SESSION["materno"] ?>">
 
                 <div class="dropdown dropdown-typical">
                     <a href="#" class="dropdown-toggle no-arr">
