@@ -1,9 +1,23 @@
 <?php
     require_once("../config/conexion.php");
-    require_once("../models/Usuario.php");
+    require_once("../models/usuarioModel.php");
     $usuario = new Usuario();
 
-    switch($_GET["op"]){
+    switch($_GET["opcion"])
+    {
+
+        case "actualizarOrgano":
+            $usuario->actualizar_organo_user($_POST["Ubicaciones"],$_SESSION["enlace"]);
+            $_SESSION["fk_organo"] = $_POST["Ubicaciones"];
+        break;
+
+
+
+
+
+
+
+
         case "guardaryeditar":
             if(empty($_POST["usu_id"])){       
                 $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_ape"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["rol_id"]);     

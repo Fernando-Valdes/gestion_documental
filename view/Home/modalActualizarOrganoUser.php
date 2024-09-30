@@ -14,7 +14,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="rol_id">Rol</label>
+                        <label class="form-label" for="rol_id">Órgano Generador</label>
                         <select class="select2" id="Ubicaciones" name="Ubicaciones">
                         </select>
                     </div>

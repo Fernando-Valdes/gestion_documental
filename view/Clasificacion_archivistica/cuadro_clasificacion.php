@@ -18,23 +18,9 @@
 	<!-- Contenido -->
 	<div class="page-content">
 		<div class="container-fluid">
-			<header class="section-header">
-				<div class="tbl">
-					<div class="tbl-row">
-						<div class="tbl-cell">
-							<h3>Cuadro de Clasificación archivistica</h3>
-							<ol class="breadcrumb breadcrumb-simple">
-								<li><a href="#">Inicio</a></li>
-								<li class="active">Series y Subseries</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-			</header>
-
 			<div class="box-typical box-typical-padding">
-			<button type="button" id="btnnuevo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Agregar Serie</button>
-			<button type="button" id="btnnuevo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Agregar Subserie</button>
+			<button type="button" id="btnnuevaserie" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Agregar Serie</button>
+			<button type="button" id="btnnuevasubserie" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> Agregar Subserie</button>
 				<table id="ticket_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
 					<thead>
 						<tr>

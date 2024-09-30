@@ -27,44 +27,7 @@
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }
-        
-
-        public function guardar_usuario($enlace)
-        {
-            $datos=$this->obtener_datos_usuario_siga($enlace);  
-
-            if(is_array($datos)==true and count($datos)>0)
-            {
-                foreach($datos as $row)
-                {
-                   $this->insert_usuario($row["emp_enlace"],$row["emp_nombres"],$row["emp_paterno"],$row["emp_materno"],$row["emp_correoper"],$row["emp_enlace"]);
-                   $this->insert_rol_usuario($row["emp_enlace"]);
-                }
-
-                $datos=$this->get_usuario_x_id($enlace);  
-                if(is_array($datos)==true and count($datos)>0)
-                {
-                    foreach($datos as $row)
-                    {
-                        $_SESSION["enlace"] = $row["enlace"];
-                        $_SESSION["nombre"] = $row["nombre"];
-                        $_SESSION["paterno"] = $row["paterno"];
-                        $_SESSION["materno"] = $row["materno"];
-                        $_SESSION["email"] = $row["email"];
-                        $_SESSION["puesto_usuario"] = $row["puesto_usuario"];
-                        $_SESSION["fk_organo"] = $row["fk_organo"];
-                        $_SESSION["id_rol"] = $row["id_rol"];
-                        $_SESSION["nombre_rol"] = $row["nombre_rol"];
-                        $_SESSION["nombre_corto_rol"] = $row["nombre_corto_rol"];
-                        $_SESSION["descripcion_rol"] = $row["descripcion_rol"];
-                        $_SESSION["id_rol_usuario"] = $row["id_rol_usuario"];
-                    }
-                    $conexion = new Conectar(); 
-                    header("Location:" . $conexion->ruta() . "view/Home/home.php");
-                } 
-            } 
-        }
-       
+              
         public function obtener_datos_usuario_siga($enlace)
         {
             $conectar= parent::conexion("siga_administrativo");
@@ -142,6 +105,21 @@
             return $resultado=$sql->fetchAll();
         }
 
+        public function actualizar_organo_user($fkOrgano,$enlace)
+        {
+            $conectar= parent::conexion("gestion_documental");
+            parent::set_names();
+
+            $sql= " UPDATE cat_usuario
+                    SET fk_organo=?
+                    WHERE enlace=?";
+
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1, $fkOrgano);
+            $sql->bindValue(2, $enlace);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
 
 
 
@@ -149,6 +127,7 @@
 
 
         
+
 
 
 
