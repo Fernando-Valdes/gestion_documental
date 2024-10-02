@@ -33,7 +33,7 @@
         } 
         else
         {
-            $datos=$this->obtener_datos_usuario_siga($Enlace);  
+            $datos=$usuario->obtener_datos_usuario_siga($Enlace);  
 
             if(is_array($datos)==true and count($datos)>0)
             {
@@ -43,7 +43,7 @@
                     $usuario->insert_rol_usuario($row["emp_enlace"]);
                 }
 
-                $datos=$usuario->get_usuario_x_id($enlace);  
+                $datos=$usuario->get_usuario_x_id($Enlace);  
                 if(is_array($datos)==true and count($datos)>0)
                 {
                     foreach($datos as $row)

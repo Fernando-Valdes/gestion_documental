@@ -1,8 +1,10 @@
-function init(){
+function init()
+{
    
 }
 
-$(document).ready(function(){  //manda a llamar estatus,nombre,fecha,deta_tick,descripcion(usuario),titulo,
+$(document).ready(function()
+{  //manda a llamar estatus,nombre,fecha,deta_tick,descripcion(usuario),titulo,
     var tick_id = getUrlParameter('ID');
     
     listardetalle(tick_id);

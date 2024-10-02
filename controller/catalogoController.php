@@ -7,41 +7,37 @@
 
     switch($_GET["opcion"])
     {
-        case "get_fondo":
-            $datos = $Catalogos->get_fondo();
-
+        case "GetYearComboBox":
+            $datos = $Catalogos->GetYearComboBox($_POST["fondo"]);
             if(is_array($datos)==true and count($datos)>0)
             {
                 foreach($datos as $row)
                 {
-                    $html.= "<option value='".$row['id_fondo']."'>".$row['clave_fondo']." - ".$row['fondo']."</option>";
+                    $html.= "<option value='".$row['id_year']."'>".$row['YEAR']."</option>";
                 }
                 echo $html;
             }    
         break;
 
-        case "get_subfondo":
-            //$datos = $Catalogos->get_subfondo($_POST["fondo"]);
-            $datos = $Catalogos->get_subfondo(1);
+        case "GetYearVigenciaComboBox":
+            $datos = $Catalogos->GetYearVigenciaComboBox($_POST["fondo"]);
             if(is_array($datos)==true and count($datos)>0)
             {
                 foreach($datos as $row)
                 {
-                    $html.= "<option value='".$row['id_subfondo']."'>".$row['clave_fondo'].".".$row['clave_subfondo']." - ".$row['subfondo']."</option>";
+                    $html.= "<option value='".$row['id_year_vigencia']."'>".$row['YEAR_vigencia']."</option>";
                 }
                 echo $html;
             }    
         break;
 
-        case "get_OrganoXsubfondo":
-            //$datos = $Catalogos->get_OrganoXsubfondo($_POST["subfondo"]);
-            $datos = $Catalogos->get_OrganoXsubfondo(1);
-
+        case "GetValorDocumentalComboBox":
+            $datos = $Catalogos->GetValorDocumentalComboBox($_POST["fondo"]);
             if(is_array($datos)==true and count($datos)>0)
             {
                 foreach($datos as $row)
                 {
-                    $html.= "<option value='".$row['id_organo']."'>".$row['clave_fondo'].".".$row['clave_subfondo'].".".$row['clave_organo']." - ".$row['organo_generador']."</option>";
+                    $html.= "<option value='".$row['id_valor']."'>".$row['valor']."</option>";
                 }
                 echo $html;
             }    

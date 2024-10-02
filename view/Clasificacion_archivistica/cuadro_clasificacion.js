@@ -70,7 +70,7 @@ $(document).ready(function()
 
 $(document).on("click", "#btnnuevaserie", function() 
 {
-    window.location.href = "agregarserie.php";
+    window.location.href = "series.php?Opcion=Agregar";
 });
 
 

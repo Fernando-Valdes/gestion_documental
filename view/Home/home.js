@@ -44,7 +44,7 @@ $(document).ready(function()
         $('#modalActualizarOrgano').modal('show');
         $('#usu_nom').val(NombreUSer);
 
-        $.post("../../controller/organoGeneradorController.php?opcion=getorgano",function(data, status)
+        $.post("../../controller/organoGeneradorController.php?opcion=GetOrganoGeneradorComboBox",function(data, status)
         {
             $('#Ubicaciones').html(data);
         });

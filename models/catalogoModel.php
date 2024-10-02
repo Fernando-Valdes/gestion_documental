@@ -1,67 +1,49 @@
 <?php
     class Catalogos extends Conectar
     {
-        public function get_fondo()
+        public function GetYearComboBox()
         {
             $conectar= parent::conexion("gestion_documental");
             parent::set_names();
 
-            $sql="SELECT 	
-                    id_fondo,
-                    fondo,
-                    clave_fondo
-                FROM cat_fondo
-                WHERE activo_fondo =1";
-
-            $sql=$conectar->prepare($sql);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function get_subfondo($fondo)
-        {
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            
             $sql="SELECT 
-                    id_subfondo,
-                    clave_fondo,
-                    clave_subfondo,
-                    subfondo
-                FROM cat_subfondo
-                INNER JOIN cat_fondo ON fk_fondo = id_fondo
-                WHERE fk_fondo=?
-                AND activo_subfondo=1";
+                    id_year,
+                    YEAR
+                FROM cat_year";
 
             $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $fondo);
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }
 
-        public function get_OrganoXsubfondo($subfondo)
-        {
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            
-            $sql="SELECT 
-                        id_organo,
-                        clave_fondo,
-                        clave_subfondo,
-                        clave_organo,
-                        organo_generador,
-                        seccion
-                    FROM cat_organo_generador
-                    INNER JOIN cat_subfondo ON fk_subfondo = id_subfondo
-                    INNER JOIN cat_fondo ON fk_subfondo = id_fondo
-                    WHERE fk_subfondo=? 
-                    AND activo_organo=1";
+    public function GetYearVigenciaComboBox()
+    {
+        $conectar= parent::conexion("gestion_documental");
+        parent::set_names();
 
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $subfondo);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-              
+        $sql="SELECT 
+                id_year_vigencia,
+                YEAR_vigencia
+            FROM cat_year_vigencia";
+
+        $sql=$conectar->prepare($sql);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
     }
+
+    public function GetValorDocumentalComboBox()
+    {
+        $conectar= parent::conexion("gestion_documental");
+        parent::set_names();
+
+        $sql="SELECT 
+                id_valor,
+                valor
+            FROM cat_valor_documental";
+
+        $sql=$conectar->prepare($sql);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
+}
 ?>
