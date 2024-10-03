@@ -183,7 +183,7 @@ VALUES
     ('Clasificación archivistica', 'Cuadro de clasificación archivistica del área','glyphicon glyphicon-list-alt','../Clasificacion_archivistica/cuadro_clasificacion.php'),
     ('Órgano generador', 'Administración de los órganos generadores de información','glyphicon glyphicon-briefcase',''),
     ('Catálogos', 'Administración de los catálogos existentes','glyphicon glyphicon-list',''),
-    ('Usuarios', 'Administración de los usuarios del sistema','glyphicon glyphicon-user',''),
+    ('Usuarios', 'Administración de los usuarios del sistema','glyphicon glyphicon-user','../Usuario/usuario.php'),
     ('Configuración', 'Configuracion del sistema','glyphicon glyphicon-cog','');
 
 

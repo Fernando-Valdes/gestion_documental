@@ -1,11 +1,11 @@
 <?php
   require_once("../../config/conexion.php"); 
-  if(isset($_SESSION["usu_id"])){ 
+  if(isset($_SESSION["enlace"])){ 
 ?>
 <!DOCTYPE html>
 <html>
     <?php require_once("../MainHead/head.php");?>
-	<title>AnderCode</>::Mantenimiento Usuario</title>
+	<title>Administración de Usuarios</title>
 </head>
 <body class="with-side-menu">
 
@@ -18,42 +18,28 @@
 	<!-- Contenido -->
 	<div class="page-content">
 		<div class="container-fluid">
-			<header class="section-header">
-				<div class="tbl">
-					<div class="tbl-row">
-						<div class="tbl-cell">
-							<h3>Mantenimiento Usuario</h3>
-							<ol class="breadcrumb breadcrumb-simple">
-								<li><a href="#">Home</a></li>
-								<li class="active">Mantenimiento Usuario</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-			</header>
-
 			<div class="box-typical box-typical-padding">
-				<button type="button" id="btnnuevo" class="btn btn-inline btn-primary">Nuevo Registro</button>
+				<button type="button" id="btnnuevo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
 				<table id="usuario_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
 					<thead>
 						<tr>
+							<th style="width: 10%;">Enlace</th>
+							<th style="width: 10%;">Prefijo</th>
 							<th style="width: 10%;">Nombre</th>
-							<th style="width: 10%;">Apellido</th>
-							<th class="d-none d-sm-table-cell" style="width: 40%;">Correo</th>
-							<th class="d-none d-sm-table-cell" style="width: 5%;">Contraseña</th>
-							<th class="d-none d-sm-table-cell" style="width: 5%;">Rol</th>
-							<th class="text-center" style="width: 5%;"></th>
-							<th class="text-center" style="width: 5%;"></th>
+							<th style="width: 10%;">Correo</th>
+							<th style="width: 10%;">Puesto</th>
+							<th style="width: 10%;">Órgano Generador</th>
+							<th style="width: 10%;">Estado</th>
+							<th style="width: 10%;">Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
-
 					</tbody>
 				</table>
 			</div>
-
 		</div>
 	</div>
+
 	<!-- Contenido -->
 
 	<?php require_once("modalnuevo.php");?>
