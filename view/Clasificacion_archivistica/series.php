@@ -20,8 +20,7 @@
 	<div class="page-content">
 		<div class="container-fluid">
 			<section class="card">
-                <header class="card-header text-center" role="alert" style="background-color: #0f9e8f; color: white;" id="TITULO">
-                    
+                <header class="card-header text-center" role="alert" style="background-color: #0f9e8f; color: white;" id="TITULO"> 
                 </header>
 				<div class="card-block">
                     <input type="hidden" id="id_Serie" name="id_Serie">

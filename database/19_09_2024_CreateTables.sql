@@ -10,6 +10,7 @@ CREATE TABLE cat_usuario
     paterno VARCHAR(250) NOT NULL,
     materno VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
+    password_user LONGBLOB NOT NULL,
     puesto_usuario VARCHAR(250) NOT NULL,
     fk_organo INT DEFAULT 0,
     activo_usuario INT DEFAULT 1,
@@ -186,7 +187,7 @@ VALUES
     ('Configuración', 'Configuracion del sistema','glyphicon glyphicon-cog','');
 
 
-INSERT INTo cat_rol
+INSERT INTO cat_rol
     (nombre_rol, nombre_corto_rol, descripcion_rol)
 VALUES
     ('Administrador', 'admin', 'Administrador del sistema (Área de Informática)'),
@@ -217,60 +218,12 @@ VALUES
     (7,3),
     (8,1);
 
+
 INSERT INTO cat_usuario
-    (enlace,prefijo,nombre,paterno,materno,email,puesto_usuario)
+    (enlace,prefijo,nombre,paterno,materno,email,puesto_usuario,password_user)
 VALUES
-    (1,'DRA.','SUSANA','SARMIENTO','LOPEZ','susana.sarmiento@hotmail.com','MAGISTRADA PRESIDENTA'),
-    (101,'L.C.P.','OSCAR MARIO','ORANTES','COUTIÑO','oscarmorantes10@hotmail.com','JEFE DE LA UNIDAD DE APOYO ADMINISTRATIVO'),
-    (43,'L.A.E.','JOSE EUSTAQUIO','GOMEZ','TRUJILLO','jgomezovcpalenque@gmail.com','JEFE DEL AREA DE FINANCIEROS'),
-    (118,'L.A.E.','MARIA DEL ROSARIO','AVENDAÑO','PEREZ','marosaven@hotmail.com','JEFA DEL AREA DE RECURSOS MATERIALES Y SERVICIOS GENERALES'),
-    (99,'L.D.','JOSUE','CASTILLO','MELCHOR','joscasmel@gmail.com','JEFE DEL AREA DE RECURSOS HUMANOS'),
-    (51,'I.S.C.','LUIS ENRIQUE','ALVAREZ','GONZALEZ','GONZALEZ','JEFE DEL AREA DE INFORMATICA'),
-    (46,'DR.','FERNANDO','CASTELLANOS','COUTIÑO','tribunaldejusticiachiapas@gmail.com','JEFE DEL AREA DE PLANEACION'),
-    (85,'L.D.','ALEJANDRO','GONZALEZ','RUIZ','ale.asistenciajuridica@gmail.com','JEFE DE LA UNIDAD DE TRANSPARENCIA'),
-    (48,'L.D.','MARCO ANTONIO','SARMIENTO','GALLEGOS','sargama1@gmail.com','JEFE DEL AREA DE CONTRALORIA'),
-    (128,'L.C.C.','ANGEL GABRIEL','COBAXIN','RAMOS','acobax@gmail.com','JEFE DEL AREA DE COMUNICACION SOCIAL'),
-    (126,'MTRO.','OSCAR EDUARDO','TREJO','CRUZ','otrejo2112@gmail.com','JEFE DEL AREA DE DEFENSORIA DE OFICIO'),
-    (74,'L.D.','FABIOLA','SIMUTA','SANDOVAL','fabi_04@hotmail.com','JEFA DEL AREA DE COORDINADORA DE ARCHIVOS'),
-    (30,'L.D.','EUGENIA CANDELARIA','MORENO','CASTILLO','eugenia.castillo.ta@gmail.com','PRESIDENTA COMITÉ DE IGUALDAD Y DERECHOS HUMANOS'),
-    (72,'MTRA.','MONICA DE JESUS','TREJO','VELAZQUEZ','acinom2009@live.com.mx','PRESIDENTA COMITÉ DE ÉTICA Y CONDUCTA'),
-    (82,'DR.','VICTOR MARCELO','RUIZ','REYNA','vruiz1974@gmail.com','PRESIDENTE SALA DE REVISIÓN'),
-    (78,'L.D.','LISANDRO ARTURO','CERVANTES','GONZALEZ','lisandrocervantes27@gmail.com','JUEZ JUZGADO DE JURISDICCIÓN ADMINISTRATIVA'),
-    (80,'MTRO.','ELMAR MARIO','GUIRAO','MALDONADO','andariego38@hotmail.com','JUEZ JUZGADO ESPECIALIZADO EN RESPONSABILIDAD ADMINISTRATIVA');
+    (122,'L.S.C.','JOSE FERNANDO','VALES','NANDUCA','valdesnanduca@gmail.com','AUXILIAR ADMINISTRATIVO "B"', '4af0f111c84962774dce2448b2e8476b7cf85ae28ab2598da7e786bd0cc281efb6f4d9f744faec5f683f3da9f2a70337');
 
-INSERT INTO cat_fondo
-    (fondo,clave_fondo,fk_user_presidencia,fk_user_uaa,fk_user_coordinacion_archivo)
-VALUES 
-    ('TRIBUNAL ADMINISTRATIVO DEL PODER JUDICIAL DEL ESTADO DE CHIAPAS','TAPJE',1,101,74);
-
-INSERT INTO cat_subfondo
-    (clave_subfondo,subfondo,fk_fondo)
-VALUES
-    ('01','PLENO DEL TRIBUNAL ADMINISTRATIVO', 1),
-    ('02','ÓRGANOS JURISDICCIONALES', 1);
-
-INSERT INTO cat_organo_generador
-    (clave_organo,organo_generador,seccion,fk_user_organo_generador,fk_user_responsable_archivo, fk_subfondo)
-VALUES 
-    ('01','PRESIDENCIA DEL PLENO','',1,1,1),
-    ('02','UNIDAD DE APOYO ADMINISTRATIVO','',101,101,1),
-    ('03','ÁREA DE RECURSOS FINANCIEROS','',43,43,1),
-    ('04','ÁREA DE RECURSOS MATERIALES Y SERVICIOS GENERALES','',118,118,1),
-    ('05','ÁREA DE RECURSOS HUMANOS','',99,99,1),
-    ('06','ÁREA DE INFORMÁTICA','06P',51,51,1),
-    ('07','ÁREA DE PLANEACIÓN','',46,46,1),
-    ('08','UNIDAD DE TRANSPARENCIA','',85,85,1),
-    ('09','CONTRALORÍA','',48,48,1),
-    ('10','ÁREA DE COMUNICACIÓN SOCIAL','',128,128,1),
-    ('11','ÁREA DE DEFENSORÍA DE OFICIO','',126,126,1),
-    ('12','ÁREA COORDINADORA DE ARCHIVOS','',74,74,1),
-    ('13','FONDO AUXILIAR','',101,101,1),
-    ('14','COMITÉ DE IGUALDAD Y DERECHOS HUMANOS','',30,30,1),
-    ('15','COMITÉ DE ÉTICA Y CONDUCTA','',72,72,1),
-    ('16','COMITÉ DEL VOLUNTARIADO DE CORAZÓN','',1,1,1),
-    ('01','SALA DE REVISIÓN','',82,82,2),
-    ('02','JUZGADO DE JURISDICCIÓN ADMINISTRATIVA','',78,78,2),
-    ('03','JUZGADO ESPECIALIZADO EN RESPONSABILIDAD ADMINISTRATIVA','',80,80,2);
 
 INSERT INTO cat_year
     (year)

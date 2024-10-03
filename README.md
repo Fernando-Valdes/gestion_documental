@@ -27,3 +27,13 @@ Desarrollo: L.S.C. José Fernando Valdes Nanduca
 
 
 
+------------------------------------------------------------------------------------------------------------------------------------
+# USO DEL SISTEMA
+------------------------------------------------------------------------------------------------------------------------------------
+
+# 1: REGISTRAR TODO LOS USUARIOS 
+Para uso del sistema, el área coordinadora de archivos deberá registrar en el sistema todos los usuarios que tendran acceso a el.
+-Todos los titulares de las áreas
+-Todos los responsables de archivos de las áreas 
+
+

@@ -85,7 +85,8 @@ $(document).ready(function(){     //Listar los tickets en administrador
     }).DataTable(); 
 });
 
-function editar(usu_id){   //muestra la informacion del boton editar (Nota la contraseña se debe de mostrar pero no se si tendra algo que ver el md5)
+function editar(usu_id)
+{   //muestra la informacion del boton editar (Nota la contraseña se debe de mostrar pero no se si tendra algo que ver el md5)
     $('#mdltitulo').html('Editar Registro'); 
 
     $.post("../../controller/usuario.php?op=mostrar", {usu_id : usu_id}, function (data) {
@@ -131,7 +132,8 @@ function eliminar(usu_id){   //Boton de eliminar Manteniento Usuario
     });
 }
 
-$(document).on("click","#btnnuevo", function(){  //Boton del nuevo registro
+$(document).on("click","#btnnuevo", function()
+{ 
     $('#mdltitulo').html('Nuevo Registro');
     $('#usuario_form')[0].reset();
     $('#modalnuevo').modal('show');
