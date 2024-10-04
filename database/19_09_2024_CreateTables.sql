@@ -10,7 +10,6 @@ CREATE TABLE cat_usuario
     paterno VARCHAR(250) NOT NULL,
     materno VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
-    password_user LONGBLOB NOT NULL,
     puesto_usuario VARCHAR(250) NOT NULL,
     fk_organo INT DEFAULT 0,
     activo_usuario INT DEFAULT 1,
@@ -220,10 +219,14 @@ VALUES
 
 
 INSERT INTO cat_usuario
-    (enlace,prefijo,nombre,paterno,materno,email,puesto_usuario,password_user)
+    (enlace,prefijo,nombre,paterno,materno,email,puesto_usuario)
 VALUES
-    (122,'L.S.C.','JOSE FERNANDO','VALES','NANDUCA','valdesnanduca@gmail.com','AUXILIAR ADMINISTRATIVO "B"', '4af0f111c84962774dce2448b2e8476b7cf85ae28ab2598da7e786bd0cc281efb6f4d9f744faec5f683f3da9f2a70337');
+    (122,'L.S.C.','JOSE FERNANDO','VALDES','NANDUCA','valdesnanduca@gmail.com','AUXILIAR ADMINISTRATIVO "B"');
 
+INSERT INTO cat_rol_usuario
+    (fk_enlace,fk_rol_usuario)
+VALUES
+    (122,1);
 
 INSERT INTO cat_year
     (year)

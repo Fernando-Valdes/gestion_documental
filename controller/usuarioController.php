@@ -1,7 +1,11 @@
 <?php
     require_once("../config/conexion.php");
     require_once("../models/usuarioModel.php");
-    $usuario = new Usuario();
+    require_once("../models/organoGeneradorModel.php");
+
+    $usuario = new Usuario(); 
+    $organoGenerador = new organoGenerador();
+
 
     switch($_GET["opcion"])
     {
@@ -12,40 +16,47 @@
         break;
 
 
-
-
-
-
-
-
-        case "guardaryeditar":
-            if(empty($_POST["usu_id"])){       
-                $usuario->insert_usuario($_POST["usu_nom"],$_POST["usu_ape"],$_POST["usu_correo"],$_POST["usu_pass"],$_POST["rol_id"]);     
-            }
-            else {
-                $pass_encrip = md5($_POST["usu_correo"]).hash('sha256',$_POST["usu_pass"]);
-                $usuario->update_usuario($_POST["usu_id"],$_POST["usu_nom"],$_POST["usu_ape"],$_POST["usu_correo"],$pass_encrip,$_POST["rol_id"]);
-            }
-            break;
-
-        case "listar":
-            $datos=$usuario->get_usuario();
+        case "get_TodosLosUsuarios":
+            $datos=$usuario->get_TodosLosUsuarios();
             $data= Array();
-            foreach($datos as $row){
-                $sub_array = array();
-                $sub_array[] = $row["usu_nom"];
-                $sub_array[] = $row["usu_ape"];
-                $sub_array[] = $row["usu_correo"];
-                $sub_array[] = $row["usu_pass"];
 
-                if ($row["rol_id"]=="1"){
-                    $sub_array[] = '<span class="label label-pill label-success">Usuario</span>';
-                }else if($row["rol_id"]=="0"){
-                    $sub_array[] = '<span class="label label-pill label-info">Administrador</span>';
+            foreach($datos as $row)
+            {
+                $sub_array = array();
+                $sub_array[] = $row["enlace"];
+                $sub_array[] = $row["Nombre"];
+                $sub_array[] = $row["email"];
+                $sub_array[] = $row["puesto_usuario"];
+
+                
+                if($row["fk_organo"] == "0")
+                {
+                    $sub_array[] = 'Sin Asignar';
+                }
+                else
+                {
+                    $DatosOrgano = $organoGenerador->GetOrganoGeneradorXid($row["fk_organo"]);
+                    foreach($DatosOrgano as $rowOrgano)
+                    {
+                        $sub_array[] = $rowOrgano['organo_generador'];
+                    }
                 }
 
-                $sub_array[] = '<button type="button" onClick="editar('.$row["usu_id"].');"  id="'.$row["usu_id"].'" class="btn btn-inline btn-warning btn-sm ladda-button"><i class="fa fa-edit"></i></button>';
-                $sub_array[] = '<button type="button" onClick="eliminar('.$row["usu_id"].');"  id="'.$row["usu_id"].'" class="btn btn-inline btn-danger btn-sm ladda-button"><i class="fa fa-trash"></i></button>';
+                $sub_array[] = $row["nombre_rol"];
+
+
+                if ($row["Estado"]=="Activo")
+                {
+                    $sub_array[] = '<span class="label label-pill label-success">Activo</span>';
+                }else
+                {
+                    $sub_array[] = '<span class="label label-pill label-info">Inactivo</span>';
+                }
+
+                $sub_array[] = '<button type="button" onClick="editar('.$row["enlace"].');"  id="'.$row["enlace"].'" class="btn btn-inline btn-warning btn-sm ladda-button"><i class="fa fa-edit"></i></button>'.
+                               '<button type="button" onClick="eliminar('.$row["enlace"].');"  id="'.$row["enlace"].'" class="btn btn-inline btn-danger btn-sm ladda-button"><i class="fa fa-trash"></i></button>'.
+                               '<button type="button" onClick="ver('.$row["enlace"].');"  id="'.$row["enlace"].'" class="btn btn-inline btn-primary btn-sm ladda-button"><i class="fa fa-eye"></i></button>';
+                
                 $data[] = $sub_array;
             }
 
@@ -55,95 +66,31 @@
                 "iTotalDisplayRecords"=>count($data),
                 "aaData"=>$data);
             echo json_encode($results);
+
         break;
 
-        case "eliminar":
-            $usuario->delete_usuario($_POST["usu_id"]);
-        break;
+        case "obtener_Todos_Empleados_SIGA":
+            $datos=$usuario->obtener_Todos_Empleados_SIGA();
+            $data= Array();
 
-        case "mostrar";
-            $datos=$usuario->get_usuario_x_id($_POST["usu_id"]);  
-            if(is_array($datos)==true and count($datos)>0){
-                foreach($datos as $row)
-                {
-                    $output["usu_id"] = $row["usu_id"];
-                    $output["usu_nom"] = $row["usu_nom"];
-                    $output["usu_ape"] = $row["usu_ape"];
-                    $output["usu_correo"] = $row["usu_correo"];
-                    $output["usu_pass"] = $row["usu_pass"];
-                    $output["rol_id"] = $row["rol_id"];
-                }
-                echo json_encode($output);
-            }   
-        break;
+            foreach($datos as $row)
+            {
+                $sub_array = array();
+                $sub_array[] = $row["Enlace"];
+                $sub_array[] = $row["Empleado"];
+                $sub_array[] = $row["emp_correoper"];
+                $sub_array[] = $row["Categoria"];
 
-        case "total";
-            if( $_SESSION["rol_id"]==0){
-                $datos=$usuario->get_ticket_todos();
-            } else{
-                $datos=$usuario->get_usuario_total_x_id($_POST["usu_id"]);  
+                $data[] = $sub_array;
             }
-        
-            if(is_array($datos)==true and count($datos)>0){
-                foreach($datos as $row)
-                {
-                    $output["TOTAL"] = $row["TOTAL"];
-                }
-                echo json_encode($output);
-            }
+
+            $results = array(
+                "sEcho"=>1,
+                "iTotalRecords"=>count($data),
+                "iTotalDisplayRecords"=>count($data),
+                "aaData"=>$data);
+            echo json_encode($results);
+
         break;
-
-        case "totalabierto";
-            if( $_SESSION["rol_id"]==0){
-                $datos=$usuario->get_ticket_abiertotodos();
-            } else{
-                $datos=$usuario->get_usuario_totalabierto_x_id($_POST["usu_id"]);
-            }  
-                if(is_array($datos)==true and count($datos)>0){
-                    foreach($datos as $row)
-                    {
-                        $output["TOTAL"] = $row["TOTAL"];
-                    }
-                    echo json_encode($output);
-                }
-        break;
-
-        case "totalcerrado";
-            if( $_SESSION["rol_id"]==0){
-                $datos=$usuario->get_usuario_totalcerradotodos();
-            } else{
-                $datos=$usuario->get_usuario_totalcerrado_x_id($_POST["usu_id"]);
-            }  
-                
-                if(is_array($datos)==true and count($datos)>0){
-                    foreach($datos as $row)
-                    {
-                        $output["TOTAL"] = $row["TOTAL"];
-                    }
-                    echo json_encode($output);
-                }
-        break;
-
-        case "grafico";
-            $datos=$usuario->get_usuario_grafico($_POST["usu_id"]);  
-            echo json_encode($datos);
-        break;
-
-        case "combo";
-            $datos = $usuario->get_usuario_x_rol();
-            if(is_array($datos)==true and count($datos)>0){
-                $html.= "<option label='Seleccionar'></option>";
-                foreach($datos as $row)
-                {
-                    $html.= "<option value='".$row['usu_id']."'>".$row['usu_nom']."</option>";
-                }
-                echo $html;
-            }
-            break;
-        /* Controller para actualizar contraseña */
-        case "password":
-            $usuario->update_usuario_pass($_POST["usu_id"],$_POST["usu_pass"]);
-            break; 
-
     }  
 ?>

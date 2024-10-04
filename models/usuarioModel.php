@@ -121,152 +121,50 @@
             return $resultado=$sql->fetchAll();
         }
 
-
-
-
-
-
-        
-
-
-
-
-       
-        public function update_usuario($usu_id,$usu_nom,$usu_ape,$usu_correo,$usu_pass,$rol_id){
+        public function get_TodosLosUsuarios()
+        {
             $conectar= parent::conexion("gestion_documental");
             parent::set_names();
-            $sql="UPDATE tm_usuario set
-                usu_nom = ?,
-                usu_ape = ?,
-                usu_correo = ?,
-                usu_pass = ?,
-                rol_id = ?,
-                fech_modi = now()
-                WHERE
-                usu_id = ?";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $usu_nom);
-            $sql->bindValue(2, $usu_ape);
-            $sql->bindValue(3, $usu_correo);
-            $sql->bindValue(4, $usu_pass);
-            $sql->bindValue(5, $rol_id);
-            $sql->bindValue(6, $usu_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function delete_usuario($usu_id){
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="UPDATE tm_usuario SET est='0', fech_elim =now() where usu_id=?";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $usu_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function get_usuario(){  //Funcion sp Evita inyecciones 
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="call sp_l_usuario_01()";
+            $sql="SELECT 
+                    enlace,
+                    CONVERT(CONCAT(prefijo, ' ', nombre, ' ', paterno, ' ', materno) USING utf8) AS Nombre,
+                    email,
+                    puesto_usuario,
+                    fk_organo,
+                    id_rol,
+                    nombre_rol,
+                    nombre_corto_rol,
+                    descripcion_rol,
+                    id_rol_usuario,
+                    IF(activo_usuario=1,'Activo', 'Inactivo') AS Estado	
+                FROM cat_rol_usuario 
+                INNER JOIN cat_usuario ON fk_enlace=enlace
+                INNER JOIN cat_rol ON fk_rol_usuario = id_rol";
             $sql=$conectar->prepare($sql);
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }
 
-
-        
-
-
-        public function get_ticket_todos(){ //Total de tickets administrador
-            $conectar= parent::conexion("gestion_documental");
+        public function obtener_Todos_Empleados_SIGA()
+        {
+            $conectar= parent::conexion("siga_administrativo");
             parent::set_names();
-            $sql="SELECT COUNT(*) as TOTAL FROM tm_ticket"; 
+            $sql=" SELECT 
+                            emp_enlace AS Enlace, 
+                            CONVERT(CONCAT(pre_descripcion, ' ', emp_nombres, ' ', emp_paterno, ' ', emp_materno) USING utf8) AS Empleado, 
+                            emp_correoper,
+                            cat_nombre AS Categoria
+                    FROM pri_empleado 
+                    INNER JOIN pri_plantilla p ON p.fk_emp_empleado = id_emp_empleado 
+                    INNER JOIN pri_plaza ON fk_pla_plaza = id_pla_plaza 
+                    INNER JOIN pri_adscripcion ON fk_ads_adscripcion = id_ads_adscripcion 
+                    INNER JOIN pri_categoria ON fk_cat_categoria = id_cat_categoria 
+                    INNER JOIN cat_prefijo ON fk_pre_prefijo = id_pre_prefijo 
+                    WHERE p.pla_estado = 1 ";
+
             $sql=$conectar->prepare($sql);
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }
-
-        public function get_usuario_total_x_id($usu_id){ //Total de tickets Usaurio
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="SELECT COUNT(*) as TOTAL FROM tm_ticket where usu_id = ?"; 
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $usu_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function get_ticket_abiertotodos(){
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="SELECT COUNT(*) as TOTAL FROM tm_ticket where fk_estatus=1";
-            $sql=$conectar->prepare($sql);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function get_usuario_totalabierto_x_id($usu_id){
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="SELECT COUNT(*) as TOTAL FROM tm_ticket where usu_id = ? and fk_estatus=1";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $usu_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function get_usuario_totalcerradotodos(){
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="SELECT COUNT(*) as TOTAL FROM tm_ticket where fk_estatus=2";
-            $sql=$conectar->prepare($sql);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function get_usuario_totalcerrado_x_id($usu_id){
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="SELECT COUNT(*) as TOTAL FROM tm_ticket where usu_id = ? and fk_estatus=2";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $usu_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function get_usuario_grafico($usu_id){
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $sql="SELECT tm_categoria.cat_nom as nom,COUNT(*) AS total
-                FROM   tm_ticket  JOIN  
-                    tm_categoria ON tm_ticket.cat_id = tm_categoria.cat_id  
-                WHERE    
-                tm_ticket.fk_estatus = 1
-                and tm_ticket.usu_id = ?
-                GROUP BY 
-                tm_categoria.cat_nom 
-                ORDER BY total DESC";
-            $sql=$conectar->prepare($sql);
-            $sql->bindValue(1, $usu_id);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-        public function update_usuario_pass($usu_id,$usu_pass){
-            $conectar= parent::conexion("gestion_documental");
-            parent::set_names();
-            $pass_encrip = md5($_SESSION["usu_correo"]).hash('sha256', $usu_pass);
-            $sql="UPDATE tm_usuario
-                SET
-                    usu_pass = '$pass_encrip'
-                WHERE
-                    usu_id = $usu_id";
-            $sql=$conectar->prepare($sql);
-            $sql->execute();
-            return $resultado=$sql->fetchAll();
-        }
-
-
     }
 ?>

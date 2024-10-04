@@ -1,13 +1,16 @@
 var tabla;
+var tablaUserSIGA;
 
 function init()
 {
-    $("#usuario_form").on("submit",function(e){
+    $("#usuario_form").on("submit",function(e)
+    {
         guardaryeditar(e);	
     });
 }
 
-function guardaryeditar(e){ //botones 
+function guardaryeditar(e)
+{ 
     e.preventDefault();
 	var formData = new FormData($("#usuario_form")[0]);
     $.ajax({
@@ -31,7 +34,8 @@ function guardaryeditar(e){ //botones
     }); 
 }
 
-$(document).ready(function(){     //Listar los tickets en administrador
+$(document).ready(function()
+{     
     tabla=$('#usuario_data').dataTable({
         "aProcessing": true,
         "aServerSide": true,
@@ -46,7 +50,7 @@ $(document).ready(function(){     //Listar los tickets en administrador
                 'pdfHtml5'
                 ],
         "ajax":{
-            url: '../../controller/usuario.php?op=listar',
+            url: '../../controller/usuarioController.php?opcion=get_TodosLosUsuarios',
             type : "post",
             dataType : "json",						
             error: function(e){
@@ -84,6 +88,7 @@ $(document).ready(function(){     //Listar los tickets en administrador
         }     
     }).DataTable(); 
 });
+
 
 function editar(usu_id)
 {   //muestra la informacion del boton editar (Nota la contraseña se debe de mostrar pero no se si tendra algo que ver el md5)
@@ -134,9 +139,75 @@ function eliminar(usu_id){   //Boton de eliminar Manteniento Usuario
 
 $(document).on("click","#btnnuevo", function()
 { 
-    $('#mdltitulo').html('Nuevo Registro');
     $('#usuario_form')[0].reset();
     $('#modalnuevo').modal('show');
+
+    $.post("../../controller/catalogoController.php?opcion=GetRolComboBox", function(data, status) 
+    {   
+        $('#rol_id').html(data);
+    });
+
+});
+
+
+$(document).on("click","#btnEmpleadoSiga", function()
+{ 
+    $('#mdltituloModaEmpleados').html('Lista de Empleados Activos SIGA');
+    $('#modalUsuariosSIGA').modal('show');
+
+
+    tablaUserSIGA=$('#usuario_dataModal').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        dom: 'Bfrtip',
+        "searching": true,
+        lengthChange: false,
+        colReorder: true,
+        buttons: [		          
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+                ],
+        "ajax":{
+            url: '../../controller/usuarioController.php?opcion=obtener_Todos_Empleados_SIGA',
+            type : "post",
+            dataType : "json",						
+            error: function(e){
+                console.log(e.responseText);	
+            }
+        },
+        "bDestroy": true,
+        "responsive": true,
+        "bInfo":true,
+        "iDisplayLength": 10,
+        "autoWidth": false,
+        "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }     
+    }).DataTable(); 
+
 });
 
 init();

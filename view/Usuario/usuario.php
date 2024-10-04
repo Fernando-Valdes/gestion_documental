@@ -23,13 +23,13 @@
 				<table id="usuario_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
 					<thead>
 						<tr>
-							<th style="width: 10%;">Enlace</th>
-							<th style="width: 10%;">Prefijo</th>
+							<th style="width: 3%;">Enlace</th>
 							<th style="width: 10%;">Nombre</th>
 							<th style="width: 10%;">Correo</th>
-							<th style="width: 10%;">Puesto</th>
+							<th style="width: 5%;">Puesto</th>
 							<th style="width: 10%;">Órgano Generador</th>
-							<th style="width: 10%;">Estado</th>
+							<th style="width: 5%;">Rol</th>
+							<th style="width: 5%;">Estado</th>
 							<th style="width: 10%;">Acciones</th>
 						</tr>
 					</thead>
@@ -43,10 +43,11 @@
 	<!-- Contenido -->
 
 	<?php require_once("modalnuevo.php");?>
+	<?php require_once("modalUsuario.php");?>
 
 	<?php require_once("../MainJs/js.php");?>
 	
-	<script type="text/javascript" src="mntusuario.js"></script>
+	<script type="text/javascript" src="usuario.js"></script>
 	
 </body>
 </html>

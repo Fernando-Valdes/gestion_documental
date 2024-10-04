@@ -42,5 +42,17 @@
                 echo $html;
             }    
         break;
+
+        case "GetRolComboBox":
+            $datos = $Catalogos->GetRolComboBox();
+            if(is_array($datos)==true and count($datos)>0)
+            {
+                foreach($datos as $row)
+                {
+                    $html.= "<option value='".$row['id_rol']."'>".$row['nombre_rol']."</option>";
+                }
+                echo $html;
+            }    
+        break;
     }
 ?>
