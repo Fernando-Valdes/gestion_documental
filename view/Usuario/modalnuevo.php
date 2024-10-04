@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <button type="button" id="btnEmpleadoSiga" class="btn btn-inline btn-warning"><i class="glyphicon glyphicon-search"></i> Buscar empleado en SIGA</button>
+            <button type="button" id="btnEmpleadoSiga" class="btn btn-inline btn-danger"><i class="glyphicon glyphicon-search"></i> Buscar empleado en SIGA</button>
                 <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
                     <i class="font-icon-close-2"></i>
                 </button>

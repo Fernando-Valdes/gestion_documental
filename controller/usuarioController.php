@@ -54,7 +54,7 @@
                 }
 
                 $sub_array[] = '<button type="button" onClick="editar('.$row["enlace"].');"  id="'.$row["enlace"].'" class="btn btn-inline btn-warning btn-sm ladda-button"><i class="fa fa-edit"></i></button>'.
-                               '<button type="button" onClick="eliminar('.$row["enlace"].');"  id="'.$row["enlace"].'" class="btn btn-inline btn-danger btn-sm ladda-button"><i class="fa fa-trash"></i></button>'.
+                               '<button type="button" onClick="eliminar('.$row["enlace"].');"  id="'.$row["enlace"].'" class="btn btn-inline btn-danger btn-sm ladda-button"><i class="glyphicon glyphicon-remove"></i></button>'.
                                '<button type="button" onClick="ver('.$row["enlace"].');"  id="'.$row["enlace"].'" class="btn btn-inline btn-primary btn-sm ladda-button"><i class="fa fa-eye"></i></button>';
                 
                 $data[] = $sub_array;
@@ -76,11 +76,8 @@
             foreach($datos as $row)
             {
                 $sub_array = array();
-                $sub_array[] = $row["Enlace"];
-                $sub_array[] = $row["Empleado"];
-                $sub_array[] = $row["emp_correoper"];
-                $sub_array[] = $row["Categoria"];
-
+                $sub_array[] = '<a href="#" class="nombrePersona" data-id="'.$row["Enlace"].'">'.$row["Empleado"].'</a>';
+                
                 $data[] = $sub_array;
             }
 
@@ -92,5 +89,20 @@
             echo json_encode($results);
 
         break;
+
+        case "obtener_Datos_Empleados_SIGA_Xid":
+            $datos=$usuario->obtener_datos_usuario_siga($_POST["id"]);
+
+            if(is_array($datos)==true and count($datos)>0)
+            {
+                foreach($datos as $row)
+                {
+                    $DatosEmpleado["usu_id"] = $row["usu_id"];
+                }
+                echo json_encode($output);
+            }   
+
+        break;
+
     }  
 ?>

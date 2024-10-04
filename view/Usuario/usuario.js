@@ -9,30 +9,6 @@ function init()
     });
 }
 
-function guardaryeditar(e)
-{ 
-    e.preventDefault();
-	var formData = new FormData($("#usuario_form")[0]);
-    $.ajax({
-        url: "../../controller/usuario.php?op=guardaryeditar",
-        type: "POST",
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(datos){    
-            console.log(datos);
-            $('#usuario_form')[0].reset();
-            $("#modalnuevo").modal('hide');
-            $('#usuario_data').DataTable().ajax.reload();
-            swal({
-                title: "HelpDesk!",
-                text: "Completado.",
-                type: "success",
-                confirmButtonClass: "btn-success"
-            });
-        }
-    }); 
-}
 
 $(document).ready(function()
 {     
@@ -89,9 +65,33 @@ $(document).ready(function()
     }).DataTable(); 
 });
 
+function guardaryeditar(e)
+{ 
+    e.preventDefault();
+	var formData = new FormData($("#usuario_form")[0]);
+    $.ajax({
+        url: "../../controller/usuario.php?op=guardaryeditar",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(datos){    
+            console.log(datos);
+            $('#usuario_form')[0].reset();
+            $("#modalnuevo").modal('hide');
+            $('#usuario_data').DataTable().ajax.reload();
+            swal({
+                title: "HelpDesk!",
+                text: "Completado.",
+                type: "success",
+                confirmButtonClass: "btn-success"
+            });
+        }
+    }); 
+}
 
 function editar(usu_id)
-{   //muestra la informacion del boton editar (Nota la contraseña se debe de mostrar pero no se si tendra algo que ver el md5)
+{   
     $('#mdltitulo').html('Editar Registro'); 
 
     $.post("../../controller/usuario.php?op=mostrar", {usu_id : usu_id}, function (data) {
@@ -108,7 +108,8 @@ function editar(usu_id)
     $('#modalnuevo').modal('show');
 }
 
-function eliminar(usu_id){   //Boton de eliminar Manteniento Usuario
+function eliminar(usu_id)
+{   
     swal({
         title: "HelpDesk",
         text: "Esta seguro de Eliminar el registro?",
@@ -150,9 +151,10 @@ $(document).on("click","#btnnuevo", function()
 });
 
 
+//Modal Usuarios en Siga
 $(document).on("click","#btnEmpleadoSiga", function()
 { 
-    $('#mdltituloModaEmpleados').html('Lista de Empleados Activos SIGA');
+    $('#mdltituloModaEmpleados').html('Lista de Empleados Activos en SIGA');
     $('#modalUsuariosSIGA').modal('show');
 
 
@@ -164,10 +166,6 @@ $(document).on("click","#btnEmpleadoSiga", function()
         lengthChange: false,
         colReorder: true,
         buttons: [		          
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
                 ],
         "ajax":{
             url: '../../controller/usuarioController.php?opcion=obtener_Todos_Empleados_SIGA',
@@ -208,6 +206,33 @@ $(document).on("click","#btnEmpleadoSiga", function()
         }     
     }).DataTable(); 
 
+});
+
+//Funcion al seleccionar una persona del modal Empleados SIGA
+$(document).on("click", ".nombrePersona", function(e) 
+{
+    e.preventDefault(); 
+    var personaId = $(this).data("id");
+
+
+    $('#HistorialResguardo').modal('hide');
+
+    $.ajax({
+        url: '../../../controller/resguardosController.php?opcion=getPersonaById',
+        type: 'POST',
+        data: { id: personaId },
+        dataType: 'json',
+        success: function(response) 
+        {
+            $('#campoNombre').val(response.nombre);
+            $('#campoTelefono').val(response.telefono);
+            $('#campoCorreo').val(response.correo);
+        },
+        error: function(xhr, status, error) 
+        {
+            console.error("Error al obtener los datos de la persona:", error);
+        }
+    });
 });
 
 init();

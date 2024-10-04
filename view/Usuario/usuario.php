@@ -43,7 +43,7 @@
 	<!-- Contenido -->
 
 	<?php require_once("modalnuevo.php");?>
-	<?php require_once("modalUsuario.php");?>
+	<?php require_once("modalUsuarioSIGA.php");?>
 
 	<?php require_once("../MainJs/js.php");?>
 	

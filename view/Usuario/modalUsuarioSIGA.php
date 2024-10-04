@@ -7,25 +7,19 @@
                 </button>
                 <h4 class="modal-title" id="mdltituloModaEmpleados"></h4>
             </div>
-            <form method="post" id="usuario_form">
-
-				<table id="usuario_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
-					<thead>
-						<tr>
-							<th style="width: 3%;">Enlace</th>
-							<th style="width: 10%;">Nombre</th>
-							<th style="width: 10%;">Correo</th>
-							<th style="width: 5%;">Puesto</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-
+            <div class="modal-body">
+                <div class="form-group">
+                    <table id="usuario_dataModal" class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="modal-footer">
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
