@@ -21,6 +21,13 @@
             <?php
             }?>
             </ul>
+            <li><a><i class="fa fa-user"></i> Inicio <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    <li><a href="home.php">Home</a></li>
+                      <li><a href="../MiPerfil/miperfil.php">Datos Personales</a></li>
+                      <li><a href="../MiPerfil/laboral.php">Datos laboral</a></li>
+                    </ul>
+                  </li>
             </nav>
         <?php    
         }

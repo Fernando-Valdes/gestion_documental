@@ -11,7 +11,7 @@
             </div>
             <form method="post" id="usuario_form">
                 <div class="modal-body">
-                    <input type="hidden" id="usu_id" name="usu_id">
+                    <input type="hidden" id="Enlace_Apoyo" name="Enlace_Apoyo">
 
                     <div class="form-group">
                         <label class="form-label" for="Enlace">Enlace : </label>

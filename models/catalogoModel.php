@@ -60,5 +60,21 @@
         $sql->execute();
         return $resultado=$sql->fetchAll();
     }
+
+    public function GetRolComboBoxSinAdmin()
+    {
+        $conectar= parent::conexion("gestion_documental");
+        parent::set_names();
+
+        $sql="SELECT 
+                id_rol,
+                nombre_rol
+            FROM cat_rol
+            WHERE id_rol<>1";
+
+        $sql=$conectar->prepare($sql);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
 }
 ?>

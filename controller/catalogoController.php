@@ -44,7 +44,15 @@
         break;
 
         case "GetRolComboBox":
-            $datos = $Catalogos->GetRolComboBox();
+            if ($_SESSION['id_rol'] == 1)
+            {
+                $datos = $Catalogos->GetRolComboBox();
+            }
+            else
+            {
+                $datos = $Catalogos->GetRolComboBoxSinAdmin();
+            }
+            
             if(is_array($datos)==true and count($datos)>0)
             {
                 foreach($datos as $row)
