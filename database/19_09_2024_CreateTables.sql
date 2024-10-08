@@ -458,3 +458,9 @@ VALUES
     (98),
     (99),
     (100);
+
+
+INSERT INTO cat_general
+    (general_a_actual,general_leyenda,general_direccion,general_telefono,fk_user_presidencia,fk_user_uaa,fk_user_coordinacion_archivo)
+VALUES
+    (2024,'"2024, Año de Felipe Carrillo Puerto, Benemérito del Proletariado, Revolucionario y Defensor del Mayab"', 'Boulevard Belisario Domínguez No. 1713 Colonia Xamaipak C.P. 29060 Tuxtla Gutiérrez, Chiapas.', '961 346 9030', 122,122,122);
