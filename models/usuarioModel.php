@@ -109,9 +109,33 @@
                     INNER JOIN cat_rol ON fk_rol_usuario = id_rol
                     INNER JOIN cat_permiso_rol ON fk_rol = id_rol
                     INNER JOIN cat_permiso ON fk_permiso = id_permiso
-                    WHERE enlace=? AND activo_usuario=1";
+                    WHERE enlace=? AND activo_usuario=1 AND id_del_padre=0";
             $sql=$conectar->prepare($sql);
             $sql->bindValue(1, $enlace);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+        public function get_permisos_Hijos($enlace, $id_padre_permiso)
+        {
+            $conectar= parent::conexion("gestion_documental");
+            parent::set_names();
+            $sql="  SELECT 
+                        id_rol_usuario,
+                        id_permiso,
+                        nombre_permiso,
+                        descripcion_permiso,
+                        icon_permiso,
+                        href_permiso	
+                    FROM cat_rol_usuario 
+                    INNER JOIN cat_usuario ON fk_enlace=enlace
+                    INNER JOIN cat_rol ON fk_rol_usuario = id_rol
+                    INNER JOIN cat_permiso_rol ON fk_rol = id_rol
+                    INNER JOIN cat_permiso ON fk_permiso = id_permiso
+                    WHERE enlace=? AND activo_usuario=1 AND id_del_padre=?";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1, $enlace);
+            $sql->bindValue(2, $id_padre_permiso);
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <?php require_once("../MainHead/head.php");?>
-	<title>Administración de Usuarios</title>
+	<title>Fondo</title>
 </head>
 <body class="with-side-menu">
 
@@ -19,7 +19,7 @@
 	<div class="page-content">
 		<div class="container-fluid">
 			<div class="box-typical box-typical-padding">
-				<button type="button" id="btnnuevo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus"></i> Agregar usuario</button>
+				<button type="button" id="btnnuevo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus"></i> Agregar fondo</button>
 				<table id="usuario_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
 					<thead>
 						<tr>
@@ -42,12 +42,11 @@
 
 	<!-- Contenido -->
 
-	<?php require_once("modalnuevo.php");?>
-	<?php require_once("modalUsuarioSIGA.php");?>
+	<?php require_once("modalFondo.php");?>
 
 	<?php require_once("../MainJs/js.php");?>
 	
-	<script type="text/javascript" src="usuario.js"></script>
+	<script type="text/javascript" src="fondo.js"></script>
 	
 </body>
 </html>

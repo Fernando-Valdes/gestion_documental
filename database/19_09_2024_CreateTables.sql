@@ -32,6 +32,7 @@ CREATE TABLE cat_permiso
     descripcion_permiso VARCHAR(500),
     icon_permiso VARCHAR(100),
     href_permiso VARCHAR(250),
+    id_del_padre INT,
     PRIMARY KEY (id_permiso)
 );
 
@@ -53,20 +54,32 @@ CREATE TABLE cat_rol_usuario
     FOREIGN KEY (fk_rol_usuario) REFERENCES cat_rol(id_rol)
 );
 
-CREATE TABLE cat_fondo
+CREATE TABLE cat_general
 (
-    id_fondo INT AUTO_INCREMENT,
+    id_general INT AUTO_INCREMENT,
     logo LONGBLOB, 
-    fondo VARCHAR(250) NOT NULL,
-    clave_fondo VARCHAR(100) NOT NULL,
+    general_a_actual INT,
+    general_leyenda TEXT,
+    general_direccion TEXT,
+    general_telefono VARCHAR(50),    
     fk_user_presidencia INT,
     fk_user_uaa INT,
-    fk_user_coordinacion_archivo INT,
-    activo_fondo INT DEFAULT 1,
-    PRIMARY KEY (id_fondo),
+    fk_user_coordinacion_archivo INT,    
+    PRIMARY KEY (id_general),
     FOREIGN KEY (fk_user_presidencia) REFERENCES cat_usuario(enlace),
     FOREIGN KEY (fk_user_uaa) REFERENCES cat_usuario(enlace),
     FOREIGN KEY (fk_user_coordinacion_archivo) REFERENCES cat_usuario(enlace)
+);
+
+CREATE TABLE cat_fondo
+(
+    id_fondo INT AUTO_INCREMENT,
+    clave_fondo VARCHAR(100) NOT NULL,
+    fondo VARCHAR(250) NOT NULL,
+    activo_fondo INT DEFAULT 1,
+    fk_general INT,
+    PRIMARY KEY (id_fondo),
+    FOREIGN KEY (fk_general) REFERENCES cat_general(id_general)
 );
 
 CREATE TABLE cat_subfondo
@@ -174,16 +187,19 @@ CREATE TABLE cat_year_vigencia
 
 
 INSERT INTO cat_permiso
-    (nombre_permiso,descripcion_permiso,icon_permiso,href_permiso) 
+    (nombre_permiso,descripcion_permiso,icon_permiso,href_permiso,id_del_padre) 
 VALUES 
-    ('Inicio', 'Panel Inicial del Sistema','glyphicon glyphicon-home','../Home/home.php'),
-    ('Documentos Recibidos', 'Administración de los documentos recibidos','glyphicon glyphicon-folder-open',''),
-    ('Documentos Producidos','Administración de los documentos producidos','glyphicon glyphicon-file',''),
-    ('Clasificación archivistica', 'Cuadro de clasificación archivistica del área','glyphicon glyphicon-list-alt','../Clasificacion_archivistica/cuadro_clasificacion.php'),
-    ('Órgano generador', 'Administración de los órganos generadores de información','glyphicon glyphicon-briefcase',''),
-    ('Catálogos', 'Administración de los catálogos existentes','glyphicon glyphicon-list',''),
-    ('Usuarios', 'Administración de los usuarios del sistema','glyphicon glyphicon-user','../Usuario/usuario.php'),
-    ('Configuración', 'Configuracion del sistema','glyphicon glyphicon-cog','');
+    ('Inicio', 'Panel Inicial del Sistema','glyphicon glyphicon-home','../Home/home.php',0),
+    ('Documentos Recibidos', 'Administración de los documentos recibidos','glyphicon glyphicon-folder-open','',0),
+    ('Documentos Producidos','Administración de los documentos producidos','glyphicon glyphicon-file','',0),
+    ('Clasificación archivistica', 'Cuadro de clasificación archivistica del área','glyphicon glyphicon-list-alt','../Clasificacion_archivistica/cuadro_clasificacion.php',0),
+    ('Catálogos', 'Administración de los catálogos existentes','glyphicon glyphicon-list','',0),
+    ('Fondo', 'Fondo de la clasificacion archivistica','glyphicon glyphicon-inbox','../Fondo/fondo.php',5),
+    ('SubFondo', 'SubFondo de la clasificacion archivistica','glyphicon glyphicon-bookmark','',5),
+    ('Órgano generador', 'Administración de los órganos generadores de información','glyphicon glyphicon-briefcase','',5),
+    ('Usuarios', 'Administración de los usuarios del sistema','glyphicon glyphicon-user','../Usuario/usuario.php',0),
+    ('Configuración', 'Configuracion del sistema','glyphicon glyphicon-cog','',0),
+    ('General', 'Configuracion general del sistema','glyphicon glyphicon-stop','../Configuracion_general/config_general.php',10);
 
 
 INSERT INTO cat_rol
@@ -215,7 +231,14 @@ VALUES
     (6,3),
     (7,1),
     (7,3),
-    (8,1);
+    (8,1),
+    (8,3),
+    (9,1),
+    (9,3),
+    (10,1),
+    (10,3),
+    (11,1),
+    (11,3);
 
 
 INSERT INTO cat_usuario
