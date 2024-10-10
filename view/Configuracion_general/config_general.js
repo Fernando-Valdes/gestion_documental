@@ -9,20 +9,19 @@ function init()
 
 $(document).ready(function()
 {     
-    
-    $.post("../../controller/usuarioController.php?opcion=get_usuario_x_id", {Enlace : Enlace}, function (data) 
+    $.post("../../controller/catalogoController.php?opcion=GetConfiguracionGeneral", function (data) 
     {
         data = JSON.parse(data);
-        $('#Enlace_Apoyo').val(data.enlace);
-        $('#Enlace').val(data.enlace);
-        $('#Prefijo').val(data.Prefijo);
-        $('#Nombres').val(data.nombre);
-        $('#Apellido_Paterno').val(data.paterno);
-        $('#Apellido_Materno').val(data.materno);
-        $('#Correo_electronico').val(data.email);
-        $('#Puesto').val(data.puesto_usuario);
-        $('#rol_id').val(data.id_rol).trigger('change');
-    
+        $('#A_ACTUAL').val(data.general_a_actual);
+        $('#LEYENDA').val(data.general_leyenda);
+        $('#TELEFONO').val(data.general_telefono);
+        $('#DIRECCION').val(data.general_direccion);
+        $('#PRESIDENCIA').val(data.user_presidencia);
+        $('#ARCHIVOS').val(data.user_archivo);
+        $('#ADMINISTRATIVO').val(data.user_uaa);
+        $('#fk_user_presidencia').val(data.fk_user_presidencia);
+        $('#fk_user_uaa').val(data.fk_user_uaa);
+        $('#fk_user_coordinacion_archivo').val(data.fk_user_coordinacion_archivo);
     }); 
 });
 
@@ -30,7 +29,7 @@ $(document).ready(function()
 
 
 
-
+$('#imagen_equipo').attr('src', data.imagen_equipo);
 
 
 

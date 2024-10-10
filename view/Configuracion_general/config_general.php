@@ -24,7 +24,9 @@
                     CONFIGURACIÓN GENERAL
                 </header>
 				<div class="card-block">
-                    <input type="hidden" id="id_general" name="id_general">
+                    <input type="hidden" id="fk_user_presidencia" name="fk_user_presidencia">
+                    <input type="hidden" id="fk_user_uaa" name="fk_user_uaa">
+                    <input type="hidden" id="fk_user_coordinacion_archivo" name="fk_user_coordinacion_archivo">
 
                     <div class="col-xl-12">
                         <div class="row">
@@ -133,7 +135,7 @@
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	<script type="text/javascript" src="series.js"></script>
+	<script type="text/javascript" src="config_general.js"></script>
 
 
 </body>

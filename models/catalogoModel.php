@@ -82,11 +82,24 @@
         $conectar= parent::conexion("gestion_documental");
         parent::set_names();
 
-        $sql="SELECT 
-                id_rol,
-                nombre_rol
-            FROM cat_rol
-            WHERE id_rol<>1";
+        $sql="SELECT 	
+                id_general,
+                logo,
+                general_a_actual,
+                general_leyenda,
+                general_direccion,
+                general_telefono,
+                fk_user_presidencia,
+                CONVERT(CONCAT(pres.prefijo, ' ', pres.nombre, ' ', pres.paterno, ' ', pres.materno) USING utf8) AS user_presidencia,
+                fk_user_uaa,
+                CONVERT(CONCAT(uaa.prefijo, ' ', uaa.nombre, ' ', uaa.paterno, ' ', uaa.materno) USING utf8) AS user_uaa,
+                fk_user_coordinacion_archivo,
+                CONVERT(CONCAT(arch.prefijo, ' ', arch.nombre, ' ', arch.paterno, ' ', arch.materno) USING utf8) AS user_archivo
+            FROM cat_general
+            INNER JOIN cat_usuario pres ON fk_user_presidencia = pres.enlace
+            INNER JOIN cat_usuario uaa ON fk_user_uaa = uaa.enlace
+            INNER JOIN cat_usuario arch ON fk_user_coordinacion_archivo = arch.enlace
+            WHERE id_general=1";
 
         $sql=$conectar->prepare($sql);
         $sql->execute();
