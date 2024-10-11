@@ -196,5 +196,26 @@
 
         break;
 
+        case "obtener_Todos_EmpleadosModal":
+            $datos=$usuario->obtener_Todos_EmpleadosModal();
+            $data= Array();
+
+            foreach($datos as $row)
+            {
+                $sub_array = array();
+                $sub_array[] = '<a href="#" class="nombrePersona" data-id="'.$row["Enlace"].'">'.$row["Empleado"].'</a>';
+                
+                $data[] = $sub_array;
+            }
+
+            $results = array(
+                "sEcho"=>1,
+                "iTotalRecords"=>count($data),
+                "iTotalDisplayRecords"=>count($data),
+                "aaData"=>$data);
+            echo json_encode($results);
+
+        break;
+
     }  
 ?>

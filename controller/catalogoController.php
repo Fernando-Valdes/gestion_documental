@@ -71,7 +71,7 @@
                 foreach($datos as $row)
                 {
                     $output["id_general"] = $row["id_general"];
-                    $output["logo"] = $row["logo"];
+                    $output["logo"] = 'data:image/jpeg;base64,' . base64_encode($row["logo"]);
                     $output["general_a_actual"] = $row["general_a_actual"];
                     $output["general_leyenda"] = $row["general_leyenda"];
                     $output["general_direccion"] = $row["general_direccion"];

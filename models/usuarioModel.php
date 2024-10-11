@@ -269,5 +269,21 @@
             $sql->execute();
             return $resultado=$sql->fetchAll();
         }
+
+        public function obtener_Todos_EmpleadosModal()
+        {
+            $conectar= parent::conexion("gestion_documental");
+            parent::set_names();
+            $sql=" SELECT 
+                            Enlace, 
+                            CONVERT(CONCAT(prefijo, ' ', nombre, ' ', paterno, ' ', materno) USING utf8) AS Empleado
+                    FROM cat_usuario 
+                    WHERE activo_usuario = 1 ";
+
+            $sql=$conectar->prepare($sql);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
     }
 ?>

@@ -2,7 +2,7 @@ function init()
 {
     $("#usuario_form").on("submit",function(e)
     {
-        guardaryeditar(e);	
+        guardar(e);	
     });
 }
 
@@ -22,20 +22,31 @@ $(document).ready(function()
         $('#fk_user_presidencia').val(data.fk_user_presidencia);
         $('#fk_user_uaa').val(data.fk_user_uaa);
         $('#fk_user_coordinacion_archivo').val(data.fk_user_coordinacion_archivo);
+        $('#Logo').attr('src', data.logo);
     }); 
 });
 
 
 
+document.getElementById('formFile').addEventListener('change', function(event)
+{
+    var input = event.target;
+
+    if (input.files && input.files[0]) 
+        {
+        var reader = new FileReader();
+
+        reader.onload = function(e) 
+        {
+            document.getElementById('Logo').src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+});
 
 
-$('#imagen_equipo').attr('src', data.imagen_equipo);
-
-
-
-
-//Guardar o editar los registros del usuario
-function guardaryeditar(e)
+function guardar(e)
 { 
     e.preventDefault();
 	var formData = new FormData($("#usuario_form")[0]);
@@ -60,76 +71,80 @@ function guardaryeditar(e)
     }); 
 }
 
-//Mostrar modal editar los datos del usuario 
-function editar(Enlace)
-{   
-    $('#usuario_form')[0].reset();
-    $("#btnEmpleadoSiga").hide();
-    $('#mdltitulo').html('Editar los datos del Usuario'); 
 
-    $.post("../../controller/catalogoController.php?opcion=GetRolComboBox", function(data, status) 
-    {   
-        $('#rol_id').html(data);
-    });
-
-    $.post("../../controller/usuarioController.php?opcion=get_usuario_x_id", {Enlace : Enlace}, function (data) 
-    {
-        data = JSON.parse(data);
-        $('#Enlace_Apoyo').val(data.enlace);
-        $('#Enlace').val(data.enlace);
-        $('#Prefijo').val(data.Prefijo);
-        $('#Nombres').val(data.nombre);
-        $('#Apellido_Paterno').val(data.paterno);
-        $('#Apellido_Materno').val(data.materno);
-        $('#Correo_electronico').val(data.email);
-        $('#Puesto').val(data.puesto_usuario);
-        $('#rol_id').val(data.id_rol).trigger('change');
-    
-    }); 
-
-    $('#modalnuevo').modal('show');
-}
-
-
-//Modal Agregar usuario
-$(document).on("click","#btnnuevo", function()
+$(document).on("click","#btnMagistrado", function()
 { 
-    $('#usuario_form')[0].reset();
-    $("#btnEmpleadoSiga").show();
-    $('#mdltitulo').html(''); 
-    $('#modalnuevo').modal('show');
+    $('#TitulomodalUsuariosPresidencia').html('Lista de Usuarios');
+    $('#modalUsuariosPresidencia').modal('show');
 
-    $.post("../../controller/catalogoController.php?opcion=GetRolComboBox", function(data, status) 
-    {   
-        $('#rol_id').html(data);
-    });
+    tablaUserSIGA=$('#tablamodalUsuariosPresidencia').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        dom: 'Bfrtip',
+        "searching": true,
+        lengthChange: false,
+        colReorder: true,
+        buttons: [		          
+                ],
+        "ajax":{
+            url: '../../controller/usuarioController.php?opcion=obtener_Todos_EmpleadosModal',
+            type : "post",
+            dataType : "json",						
+            error: function(e){
+                console.log(e.responseText);	
+            }
+        },
+        "bDestroy": true,
+        "responsive": true,
+        "bInfo":true,
+        "iDisplayLength": 10,
+        "autoWidth": false,
+        "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }     
+    }).DataTable(); 
 
 });
 
 
-//Funcion al seleccionar una persona del modal Empleados SIGA
 $(document).on("click", ".nombrePersona", function(e) 
 {
     e.preventDefault(); 
     var Enlace = $(this).data("id");
 
 
-    $('#modalUsuariosSIGA').modal('hide');
+    $('#modalUsuariosPresidencia').modal('hide');
 
     $.ajax({
-        url: '../../controller/usuarioController.php?opcion=obtener_Datos_Empleados_SIGA_Xid',
+        url: '../../controller/usuarioController.php?opcion=get_usuario_x_id',
         type: 'POST',
         data: { Enlace: Enlace },
         dataType: 'json',
         success: function(response) 
         {
-            $('#Enlace').val(response.Enlace);
-            $('#Prefijo').val(response.Prefijo);
-            $('#Nombres').val(response.Nombres);
-            $('#Apellido_Paterno').val(response.Paterno);
-            $('#Apellido_Materno').val(response.Materno);
-            $('#Correo_electronico').val(response.Correo);
-            $('#Puesto').val(response.Puesto);
+            $('#fk_user_presidencia').val(response.enlace);
+            $('#PRESIDENCIA').val(response.Prefijo + " " + response.nombre + " " + response.paterno + " " + response.materno);
         },
         error: function(xhr, status, error) 
         {
