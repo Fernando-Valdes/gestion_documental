@@ -14,42 +14,42 @@
                     <input type="hidden" id="Enlace_Apoyo" name="Enlace_Apoyo">
 
                     <div class="form-group">
-                        <label class="form-label" for="Enlace">Enlace : </label>
+                        <label class="form-label" for="Enlace"><strong>Enlace : </strong></label>
                         <input type="text" class="form-control" id="Enlace" name="Enlace" placeholder="Ingrese el número de enlace" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="Prefijo">Prefijo : </label>
+                        <label class="form-label" for="Prefijo"><strong>Prefijo : </strong></label>
                         <input type="text" class="form-control" id="Prefijo" name="Prefijo" placeholder="Ingrese el prefijo" required>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="Nombres">Nombres : </label>
+                        <label class="form-label" for="Nombres"><strong>Nombres : </strong></label>
                         <input type="text" class="form-control" id="Nombres" name="Nombres" placeholder="Ingrese el nombre" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="Apellido_Paterno">Apellido Paterno : </label>
+                        <label class="form-label" for="Apellido_Paterno"><strong>Apellido Paterno : </strong></label>
                         <input type="text" class="form-control" id="Apellido_Paterno" name="Apellido_Paterno" placeholder="Ingrese el apellido paterno" required>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="Apellido_Materno">Apellido Materno : </label>
+                        <label class="form-label" for="Apellido_Materno"><strong>Apellido Materno : </strong></label>
                         <input type="text" class="form-control" id="Apellido_Materno" name="Apellido_Materno" placeholder="Ingrese el apellido materno" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="Correo_electronico">Correo eléctronico : </label>
+                        <label class="form-label" for="Correo_electronico"><strong>Correo eléctronico : </strong></label>
                         <input type="email" class="form-control" id="Correo_electronico" name="Correo_electronico" placeholder="Ingrese el correo eléctronico" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="Puesto">Puesto : </label>
+                        <label class="form-label" for="Puesto"><strong>Puesto : </strong></label>
                         <input type="text" class="form-control" id="Puesto" name="Puesto" placeholder="Ingrese el puesto" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="rol_id">Rol</label>
+                        <label class="form-label" for="rol_id"><strong>Rol : </strong></label>
                         <select class="select2" id="rol_id" name="rol_id">
                         </select>
                     </div>

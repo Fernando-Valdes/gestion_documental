@@ -150,16 +150,30 @@
         break;
 
         case "guardaryeditar":
+
             if(empty($_POST["Enlace_Apoyo"]))
             {       
-                $usuario->insert_usuario($_POST["Enlace"],$_POST["Prefijo"],$_POST["Nombres"],$_POST["Apellido_Paterno"],$_POST["Apellido_Materno"],$_POST["Correo_electronico"],$_POST["Puesto"]);   
-                $usuario->insert_rol_usuario($_POST["Enlace"],$_POST["rol_id"]);  
+                $datos=$usuario->get_usuario_x_id($_POST["Enlace"]);
+
+                if(is_array($datos)==true and count($datos)>0)
+                {
+                    $response = array('status' => 'error', 'message' => 'Error al guardar los datos');
+                }   
+                else
+                {
+                    $usuario->insert_usuario($_POST["Enlace"],$_POST["Prefijo"],$_POST["Nombres"],$_POST["Apellido_Paterno"],$_POST["Apellido_Materno"],$_POST["Correo_electronico"],$_POST["Puesto"]);   
+                    $usuario->insert_rol_usuario($_POST["Enlace"],$_POST["rol_id"]); 
+                    $response = array('status' => 'success', 'message' => 'Datos guardados correctamente');
+                }
             }
             else 
             {
                 $usuario->actualizar_usuario_Xid($_POST["Enlace"],$_POST["Prefijo"],$_POST["Nombres"],$_POST["Apellido_Paterno"],$_POST["Apellido_Materno"],$_POST["Correo_electronico"],$_POST["Puesto"]);   
                 $usuario->actualizar_rol_usuario($_POST["Enlace"],$_POST["rol_id"]);  
+                $response = array('status' => 'success', 'message' => 'Datos guardados correctamente');
             }
+
+            echo json_encode($response);
         break;
 
         case "DesactivarUsuario":
@@ -199,12 +213,13 @@
         case "obtener_Todos_EmpleadosModal":
             $datos=$usuario->obtener_Todos_EmpleadosModal();
             $data= Array();
+            $Opcion = $_POST["Opcion"];
+
 
             foreach($datos as $row)
             {
                 $sub_array = array();
-                $sub_array[] = '<a href="#" class="nombrePersona" data-id="'.$row["Enlace"].'">'.$row["Empleado"].'</a>';
-                
+                $sub_array[] = '<a href="#" class="nombrePersona" data-id="'.$row["Enlace"].'" data-opcion="'.$Opcion.'">'.$row["Empleado"].'</a>';
                 $data[] = $sub_array;
             }
 

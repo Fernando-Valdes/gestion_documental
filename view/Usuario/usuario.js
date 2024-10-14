@@ -70,26 +70,51 @@ function guardaryeditar(e)
 { 
     e.preventDefault();
 	var formData = new FormData($("#usuario_form")[0]);
+
     $.ajax({
         url: "../../controller/usuarioController.php?opcion=guardaryeditar",
         type: "POST",
         data: formData,
         contentType: false,
         processData: false,
-        success: function(datos){    
-            console.log(datos);
-            $('#usuario_form')[0].reset();
-            $("#modalnuevo").modal('hide');
-            $('#usuario_data').DataTable().ajax.reload();
+        success: function(response)
+        {
+            var result = JSON.parse(response);
+
+            if (result.status === "success") 
+            {  
+                $('#usuario_form')[0].reset();
+                $("#modalnuevo").modal('hide');
+                $('#usuario_data').DataTable().ajax.reload();
+
+                swal({
+                    title: "¡Gestión Documental!",
+                    text: "Guardado con éxito.",
+                    type: "success",
+                    confirmButtonClass: "btn-success"
+                });
+            } else if (result.status === "error") 
+            { 
+                swal({
+                    title: "Error!",
+                    text:"¡Esta persona ya se encuentra registrada en el sistema!.",
+                    type: "error",
+                    confirmButtonClass: "btn-danger"
+                });
+            }
+        },
+        error: function(xhr, status, error) 
+        {
             swal({
-                title: "¡Gestión Documental!",
-                text: "Guardado con éxito.",
-                type: "success",
-                confirmButtonClass: "btn-success"
+                title: "Error de comunicación!",
+                text: "No se pudo conectar con el servidor.",
+                type: "error",
+                confirmButtonClass: "btn-danger"
             });
         }
-    }); 
+    });
 }
+
 
 //Mostrar modal editar los datos del usuario 
 function editar(Enlace)
@@ -209,6 +234,7 @@ $(document).on("click","#btnnuevo", function()
 $(document).on("click","#btnEmpleadoSiga", function()
 { 
     $('#mdltituloModaEmpleados').html('Lista de Empleados Activos en SIGA');
+    $('#modalnuevo').modal('hide');
     $('#modalUsuariosSIGA').modal('show');
 
 
@@ -269,8 +295,9 @@ $(document).on("click", ".nombrePersona", function(e)
     e.preventDefault(); 
     var Enlace = $(this).data("id");
 
-
+    $('#modalnuevo').modal('show');
     $('#modalUsuariosSIGA').modal('hide');
+    
 
     $.ajax({
         url: '../../controller/usuarioController.php?opcion=obtener_Datos_Empleados_SIGA_Xid',

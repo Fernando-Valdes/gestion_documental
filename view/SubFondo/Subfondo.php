@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <?php require_once("../MainHead/head.php");?>
-	<title>Administración de Fondo</title>
+	<title>Administración de SubFondo</title>
 </head>
 <body class="with-side-menu">
 
@@ -20,15 +20,15 @@
 		<div class="container-fluid">
 			<section class="card">
 				<header class="card-header text-center" role="alert" style="background-color: #0f9e8f; color: white;" id="TITULO"> 
-					ADMINISTRACIÓN DE FONDO
+					ADMINISTRACIÓN DE SUBFONDO
 				</header>
 				<div class="box-typical box-typical-padding">
-					<button type="button" id="btnnuevoFondo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus"></i> Agregar fondo</button>
-					<table id="fondo_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
+					<button type="button" id="btnnuevoSubFondo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus"></i> Agregar Subfondo</button>
+					<table id="Subfondo_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
 						<thead>
 							<tr>
 								<th style="width: 3%;">Clave</th>
-								<th style="width: 15%;">Fondo</th>
+								<th style="width: 15%;">SubFondo</th>
 								<th style="width: 3%;">Estado</th>
 								<th style="width: 5%;">Acciones</th>
 							</tr>
@@ -43,11 +43,11 @@
 
 	<!-- Contenido -->
 
-	<?php require_once("modalFondo.php");?>
+	<?php require_once("ModalSubfondo.php");?>
 
 	<?php require_once("../MainJs/js.php");?>
 	
-	<script type="text/javascript" src="fondo.js"></script>
+	<script type="text/javascript" src="subfondo.js"></script>
 	
 </body>
 </html>

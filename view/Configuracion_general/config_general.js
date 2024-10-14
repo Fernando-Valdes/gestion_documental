@@ -1,6 +1,6 @@
 function init()
 {
-    $("#usuario_form").on("submit",function(e)
+    $("#configGeneral_form").on("submit",function(e)
     {
         guardar(e);	
     });
@@ -49,18 +49,35 @@ document.getElementById('formFile').addEventListener('change', function(event)
 function guardar(e)
 { 
     e.preventDefault();
-	var formData = new FormData($("#usuario_form")[0]);
+	var formData = new FormData($("#configGeneral_form")[0]);  
+
     $.ajax({
-        url: "../../controller/usuarioController.php?opcion=guardaryeditar",
+        url: "../../controller/catalogoController.php?opcion=guardarConfigGeneral",
         type: "POST",
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(datos){    
-            console.log(datos);
-            $('#usuario_form')[0].reset();
-            $("#modalnuevo").modal('hide');
-            $('#usuario_data').DataTable().ajax.reload();
+        data: formData,  
+        contentType: false, 
+        processData: false,  
+        success: function(datos) 
+        {    
+            $('#configGeneral_form')[0].reset(); 
+
+ 
+            $.post("../../controller/catalogoController.php?opcion=GetConfiguracionGeneral", function (data) 
+            {
+                data = JSON.parse(data);
+                $('#A_ACTUAL').val(data.general_a_actual);
+                $('#LEYENDA').val(data.general_leyenda);
+                $('#TELEFONO').val(data.general_telefono);
+                $('#DIRECCION').val(data.general_direccion);
+                $('#PRESIDENCIA').val(data.user_presidencia);
+                $('#ARCHIVOS').val(data.user_archivo);
+                $('#ADMINISTRATIVO').val(data.user_uaa);
+                $('#fk_user_presidencia').val(data.fk_user_presidencia);
+                $('#fk_user_uaa').val(data.fk_user_uaa);
+                $('#fk_user_coordinacion_archivo').val(data.fk_user_coordinacion_archivo);
+                $('#Logo').attr('src', data.logo);
+            }); 
+            
             swal({
                 title: "¡Gestión Documental!",
                 text: "Guardado con éxito.",
@@ -68,7 +85,7 @@ function guardar(e)
                 confirmButtonClass: "btn-success"
             });
         }
-    }); 
+    });
 }
 
 
@@ -76,6 +93,8 @@ $(document).on("click","#btnMagistrado", function()
 { 
     $('#TitulomodalUsuariosPresidencia').html('Lista de Usuarios');
     $('#modalUsuariosPresidencia').modal('show');
+
+    var Opcion = $(this).val();
 
     tablaUserSIGA=$('#tablamodalUsuariosPresidencia').dataTable({
         "aProcessing": true,
@@ -88,8 +107,9 @@ $(document).on("click","#btnMagistrado", function()
                 ],
         "ajax":{
             url: '../../controller/usuarioController.php?opcion=obtener_Todos_EmpleadosModal',
-            type : "post",
-            dataType : "json",						
+            type : 'POST',
+            data: { Opcion: Opcion },
+            dataType : 'json',					
             error: function(e){
                 console.log(e.responseText);	
             }
@@ -124,7 +144,6 @@ $(document).on("click","#btnMagistrado", function()
             }
         }     
     }).DataTable(); 
-
 });
 
 
@@ -132,19 +151,34 @@ $(document).on("click", ".nombrePersona", function(e)
 {
     e.preventDefault(); 
     var Enlace = $(this).data("id");
-
+    var Opcion = $(this).data("opcion");
 
     $('#modalUsuariosPresidencia').modal('hide');
 
     $.ajax({
         url: '../../controller/usuarioController.php?opcion=get_usuario_x_id',
         type: 'POST',
-        data: { Enlace: Enlace },
+        data: { Enlace: Enlace},
         dataType: 'json',
         success: function(response) 
         {
-            $('#fk_user_presidencia').val(response.enlace);
-            $('#PRESIDENCIA').val(response.Prefijo + " " + response.nombre + " " + response.paterno + " " + response.materno);
+            switch (Opcion) 
+            {
+                case 'user_presidencia':
+                        $('#fk_user_presidencia').val(response.enlace);
+                        $('#PRESIDENCIA').val(response.Prefijo + " " + response.nombre + " " + response.paterno + " " + response.materno);
+                break;
+
+                case 'user_uaa':
+                        $('#fk_user_uaa').val(response.enlace);
+                        $('#ADMINISTRATIVO').val(response.Prefijo + " " + response.nombre + " " + response.paterno + " " + response.materno);
+                break;
+
+                case 'user_archivo':
+                        $('#fk_user_coordinacion_archivo').val(response.enlace);
+                        $('#ARCHIVOS').val(response.Prefijo + " " + response.nombre + " " + response.paterno + " " + response.materno);
+                break;
+            }
         },
         error: function(xhr, status, error) 
         {

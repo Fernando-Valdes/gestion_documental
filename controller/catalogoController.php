@@ -86,5 +86,13 @@
                 echo json_encode($output);
             }   
         break;
+
+        case "guardarConfigGeneral":
+
+            $file = $_FILES['Logo']['tmp_name'];
+            $fileContent = file_get_contents($file);
+            
+            $Catalogos->guardarConfigGeneral($fileContent,$_POST["A_ACTUAL"],$_POST["LEYENDA"],$_POST["DIRECCION"],$_POST["TELEFONO"],$_POST["fk_user_presidencia"],$_POST["fk_user_uaa"],$_POST["fk_user_coordinacion_archivo"]);   
+        break;
     }
 ?>

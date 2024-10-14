@@ -76,9 +76,6 @@ $(document).on("click", "#btnnuevaserie", function()
 
 
 
-
-
-
 function guardar(e)
 {
     e.preventDefault();

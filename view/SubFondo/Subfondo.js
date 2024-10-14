@@ -2,7 +2,7 @@ var tabla;
 
 function init()
 {
-    $("#fondo_form").on("submit",function(e)
+    $("#Subfondo_form").on("submit",function(e)
     {
         guardaryeditar(e);	
     });
@@ -11,7 +11,7 @@ function init()
 
 $(document).ready(function()
 {     
-    tabla=$('#fondo_data').dataTable({
+    tabla=$('#Subfondo_data').dataTable({
         "aProcessing": true,
         "aServerSide": true,
         dom: 'Bfrtip',
@@ -25,7 +25,7 @@ $(document).ready(function()
                 'pdfHtml5'
                 ],
         "ajax":{
-            url: '../../controller/fondoController.php?opcion=GetFondos',
+            url: '../../controller/subFondoController.php?opcion=GetSubFondos',
             type : "post",
             dataType : "json",						
             error: function(e){
@@ -69,10 +69,10 @@ $(document).ready(function()
 function guardaryeditar(e)
 { 
     e.preventDefault();
-	var formData = new FormData($("#fondo_form")[0]);
+	var formData = new FormData($("#Subfondo_form")[0]);
 
     $.ajax({
-        url: "../../controller/fondoController.php?opcion=guardaryeditar",
+        url: "../../controller/subFondoController.php?opcion=guardaryeditar",
         type: "POST",
         data: formData,
         contentType: false,
@@ -80,9 +80,9 @@ function guardaryeditar(e)
         success: function(response)
         {
             
-            $('#fondo_form')[0].reset();
-            $("#ModalFondo").modal('hide');
-            $('#fondo_data').DataTable().ajax.reload();
+            $('#Subfondo_form')[0].reset();
+            $("#ModalSubFondo").modal('hide');
+            $('#Subfondo_data').DataTable().ajax.reload();
 
             swal({
                 title: "¡Gestión Documental!",
@@ -104,29 +104,34 @@ function guardaryeditar(e)
 }
 
 
-function editar(id_Fondo)
+function editar(id_SubFondo)
 {   
-    $('#fondo_form')[0].reset();
-    $('#mdltitulo').html('Editar los datos del Fondo'); 
+    $('#Subfondo_form')[0].reset();
+    $('#mdltitulo').html('Editar los datos del SubFondo'); 
 
+    $.post("../../controller/fondoController.php?opcion=GetFondoComboBox", function(data, status) 
+    {
+        $('#FONDO').html(data);
+    });
 
-    $.post("../../controller/fondoController.php?opcion=GetFondoXid", {id_Fondo : id_Fondo}, function (data) 
+    $.post("../../controller/subFondoController.php?opcion=GetSubFondoXid", {id_SubFondo : id_SubFondo}, function (data) 
     {
         data = JSON.parse(data);
-        $('#id_Fondo').val(data.id_fondo);
-        $('#Clave').val(data.clave_fondo);
-        $('#Fondo').val(data.fondo);
+        $('#id_SubFondo').val(data.id_subfondo);
+        $('#Clave').val(data.clave_subfondo);
+        $('#SubFondo').val(data.subfondo);
+        $('#FONDO').val(data.fk_fondo).trigger('change');
     }); 
 
-    $('#ModalFondo').modal('show');
+    $('#ModalSubFondo').modal('show');
 }
 
 
-function Desactivar(id_Fondo)
+function Desactivar(id_SubFondo)
 {   
     swal({
         title: "Gestión Documental",
-        text: "¿Esta seguro que desea desactivar el Fondo seleccionado?",
+        text: "¿Esta seguro que desea desactivar el SubFondo seleccionado?",
         type: "error",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
@@ -138,16 +143,16 @@ function Desactivar(id_Fondo)
     {  
         if (isConfirm) 
             {
-            $.post("../../controller/fondoController.php?opcion=DesactivarFondo", {id_Fondo : id_Fondo}, function (data) 
+            $.post("../../controller/subFondoController.php?opcion=DesactivarSubFondo", {id_SubFondo : id_SubFondo}, function (data) 
             {
 
             }); 
 
-            $('#fondo_data').DataTable().ajax.reload();	
+            $('#Subfondo_data').DataTable().ajax.reload();	
 
             swal({
                 title: "Gestión Documental",
-                text: "Fondo desactivado",
+                text: "SubFondo desactivado",
                 type: "success",
                 confirmButtonClass: "btn-success"
             });
@@ -156,11 +161,11 @@ function Desactivar(id_Fondo)
 }
 
 
-function Activar(id_Fondo)
+function Activar(id_SubFondo)
 {   
     swal({
         title: "Gestión Documental",
-        text: "¿Esta seguro que desea Activar el Fondo seleccionado?",
+        text: "¿Esta seguro que desea Activar el SubFondo seleccionado?",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
@@ -172,16 +177,16 @@ function Activar(id_Fondo)
     {  
         if (isConfirm) 
             {
-            $.post("../../controller/fondoController.php?opcion=ActivarFondo", {id_Fondo : id_Fondo}, function (data) 
+            $.post("../../controller/subFondoController.php?opcion=ActivarSubFondo", {id_SubFondo : id_SubFondo}, function (data) 
             {
 
             }); 
 
-            $('#fondo_data').DataTable().ajax.reload();	
+            $('#Subfondo_data').DataTable().ajax.reload();	
 
             swal({
                 title: "Gestión Documental",
-                text: "Fondo activado",
+                text: "SubFondo activado",
                 type: "success",
                 confirmButtonClass: "btn-success"
             });
@@ -190,11 +195,16 @@ function Activar(id_Fondo)
 }
 
 
-$(document).on("click","#btnnuevoFondo", function()
+$(document).on("click","#btnnuevoSubFondo", function()
 { 
-    $('#fondo_form')[0].reset();
-    $('#mdltitulo').html('AGREGAR FONDO'); 
-    $('#ModalFondo').modal('show');
+    $('#Subfondo_form')[0].reset();
+    $('#mdltitulo').html('AGREGAR SUBFONDO'); 
+    $('#ModalSubFondo').modal('show');
+
+    $.post("../../controller/fondoController.php?opcion=GetFondoComboBox", function(data, status) 
+    {
+        $('#FONDO').html(data);
+    });
 });
 
 

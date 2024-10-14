@@ -105,5 +105,36 @@
         $sql->execute();
         return $resultado=$sql->fetchAll();
     }
+
+    public function guardarConfigGeneral($logo,$general_a_actual,$general_leyenda,$general_direccion,$general_telefono,$fk_user_presidencia,$fk_user_uaa,$fk_user_coordinacion_archivo)
+    {
+
+        $conectar= parent::conexion("gestion_documental");
+        parent::set_names();
+        $sql="UPDATE cat_general
+                SET 
+                    logo=?,
+                    general_a_actual=?,
+                    general_leyenda=?,
+                    general_direccion=?,
+                    general_telefono=?,
+                    fk_user_presidencia=?,
+                    fk_user_uaa=?,
+                    fk_user_coordinacion_archivo=?
+                WHERE id_general=1";
+
+        $sql=$conectar->prepare($sql);
+        $sql->bindValue(1, $logo, PDO::PARAM_LOB);
+        $sql->bindValue(2, $general_a_actual);
+        $sql->bindValue(3, $general_leyenda);
+        $sql->bindValue(4, $general_direccion);
+        $sql->bindValue(5, $general_telefono);
+        $sql->bindValue(6, $fk_user_presidencia);
+        $sql->bindValue(7, $fk_user_uaa);
+        $sql->bindValue(8, $fk_user_coordinacion_archivo);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
+
 }
 ?>

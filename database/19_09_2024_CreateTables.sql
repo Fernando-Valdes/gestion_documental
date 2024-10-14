@@ -195,8 +195,8 @@ VALUES
     ('Clasificación archivistica', 'Cuadro de clasificación archivistica del área','glyphicon glyphicon-list-alt','../Clasificacion_archivistica/cuadro_clasificacion.php',0),
     ('Catálogos', 'Administración de los catálogos existentes','glyphicon glyphicon-list','',0),
     ('Fondo', 'Fondo de la clasificacion archivistica','glyphicon glyphicon-inbox','../Fondo/fondo.php',5),
-    ('SubFondo', 'SubFondo de la clasificacion archivistica','glyphicon glyphicon-bookmark','',5),
-    ('Órgano generador', 'Administración de los órganos generadores de información','glyphicon glyphicon-briefcase','',5),
+    ('SubFondo', 'SubFondo de la clasificacion archivistica','glyphicon glyphicon-bookmark','../SubFondo/Subfondo.php',5),
+    ('Órgano generador', 'Administración de los órganos generadores de información','glyphicon glyphicon-briefcase','../Organo_Generador/organo_Generador.php',5),
     ('Usuarios', 'Administración de los usuarios del sistema','glyphicon glyphicon-user','../Usuario/usuario.php',0),
     ('Configuración', 'Configuracion del sistema','glyphicon glyphicon-cog','',0),
     ('General', 'Configuracion general del sistema','glyphicon glyphicon-stop','../Configuracion_general/config_general.php',10);
