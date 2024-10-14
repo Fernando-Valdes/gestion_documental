@@ -117,6 +117,48 @@ CREATE TABLE cat_valor_documental
     PRIMARY KEY (id_valor)
 );
 
+CREATE TABLE cat_estado_documento_recopilado
+(
+    id_estado_documento INT AUTO_INCREMENT,
+    estado_documento VARCHAR(100),
+    PRIMARY KEY (id_estado_documento)
+);
+
+CREATE TABLE cat_filtro_documento
+(
+    id_filtro INT AUTO_INCREMENT,
+    descripcion_filtro VARCHAR(100),
+    activo_filtro INT DEFAULT 1,
+    observaciones_filtro VARCHAR(100),
+    PRIMARY KEY (id_filtro)
+);
+
+CREATE TABLE cat_instrucciones_documento
+(
+    id_instruccion INT AUTO_INCREMENT,
+    descripcion_instruccion VARCHAR(100),
+    observaciones_instrucciones TEXT,
+    PRIMARY KEY (id_instruccion)
+);
+
+CREATE TABLE cat_tipo_documento
+(
+    id_tipo_documento INT AUTO_INCREMENT,
+    descripcion_tipo_documento VARCHAR(100),
+    observaciones_tipo_documento TEXT,
+    PRIMARY KEY (id_tipo_documento)
+);
+
+CREATE TABLE cat_prioridad_documento
+(
+    id_prioridad INT AUTO_INCREMENT,
+    descripcion_prioridad VARCHAR(100),
+    color_prioridad VARCHAR(100),
+    observaciones_prioridad TEXT,
+    PRIMARY KEY (id_prioridad)
+);
+
+
 CREATE TABLE cat_serie
 (
     id_serie INT AUTO_INCREMENT,
@@ -173,16 +215,12 @@ CREATE TABLE cat_subserie
 
 CREATE TABLE cat_year
 (
-    id_year INT AUTO_INCREMENT,
-    year INT,
-    PRIMARY KEY (id_year)
+    year INT
 );
 
 CREATE TABLE cat_year_vigencia
 (
-    id_year_vigencia INT AUTO_INCREMENT,
-    year_vigencia INT,
-    PRIMARY KEY (id_year_vigencia)
+    year_vigencia INT
 );
 
 
@@ -464,3 +502,55 @@ INSERT INTO cat_general
     (general_a_actual,general_leyenda,general_direccion,general_telefono,fk_user_presidencia,fk_user_uaa,fk_user_coordinacion_archivo)
 VALUES
     (2024,'"2024, Año de Felipe Carrillo Puerto, Benemérito del Proletariado, Revolucionario y Defensor del Mayab"', 'Boulevard Belisario Domínguez No. 1713 Colonia Xamaipak C.P. 29060 Tuxtla Gutiérrez, Chiapas.', '961 346 9030', 122,122,122);
+
+
+
+INSERT INTO cat_estado_documento_recopilado
+    (estado_documento)
+VALUES
+    ('Por archivar'),
+    ('Archivado');
+
+
+INSERT INTO cat_filtro_documento
+    (descripcion_filtro, observaciones_filtro)
+VALUES
+    ('Hoy', 'Filtrar los documentos con fecha al día de hoy.'),
+    ('Semana Actual', 'Filtrar los documentos con fecha a la semana actual.'),
+    ('Mes Actual', 'Filtrar los documentos con fecha al mes actual.'),
+    ('Periodo', 'Filtrar los documentos con fecha al periodo seleccionado.');
+
+
+INSERT INTO cat_instrucciones_documento
+    (descripcion_instruccion)
+VALUES
+    ('Analizar y atender conforme a normatividad'),
+    ('Analizar y certificar en su caso'),
+    ('Analizar y dar respuesta'),
+    ('Analizar y emitir opinión'),
+    ('Analizar y validar en su caso'),
+    ('Asistir a la reunión y elaborar tarjeta informativa'),
+    ('Atender de forma procedente'),
+    ('Continuar con el trámite respectivo'),
+    ('Hacer del conocimiento del personal de su área'),
+    ('Para acuerdo con el titular'),
+    ('Para su atención y seguimiento'),
+    ('Para su conocimiento y archivo');
+
+
+INSERT INTO cat_tipo_documento
+    (descripcion_tipo_documento)
+VALUES
+    ('Memorándum'),
+    ('Oficio'),
+    ('Circular'),
+    ('Invitación'),
+    ('Oficio Circular');
+
+
+INSERT INTO cat_prioridad_documento
+    (descripcion_prioridad, color_prioridad, observaciones_prioridad)
+VALUES
+    ('Normal', '', ''),
+    ('Urgente', '', ''),
+    ('Pendiente', '', '');

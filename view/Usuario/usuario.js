@@ -140,7 +140,6 @@ function editar(Enlace)
         $('#Correo_electronico').val(data.email);
         $('#Puesto').val(data.puesto_usuario);
         $('#rol_id').val(data.id_rol).trigger('change');
-    
     }); 
 
     $('#modalnuevo').modal('show');

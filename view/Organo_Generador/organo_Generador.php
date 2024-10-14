@@ -23,7 +23,7 @@
 					ADMINISTRACIÓN DE ORGANO GENERADOR
 				</header>
 				<div class="box-typical box-typical-padding">
-					<button type="button" id="btnnuevoSubFondo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus"></i> Agregar Subfondo</button>
+					<button type="button" id="btnnuevoSubFondo" class="btn btn-inline btn-primary"><i class="glyphicon glyphicon-plus"></i> Agregar Organo Generador</button>
 					<table id="Subfondo_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
 						<thead>
 							<tr>
