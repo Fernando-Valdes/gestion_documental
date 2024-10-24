@@ -8,12 +8,12 @@
     switch($_GET["opcion"])
     {
         case "GetSubfondoComboBox":
-            $datos = $SubFondo->GetSubfondoComboBox($_POST["fondo"]);
+            $datos = $SubFondo->GetSubfondoComboBox();
             if(is_array($datos)==true and count($datos)>0)
             {
                 foreach($datos as $row)
                 {
-                    $html.= "<option value='".$row['id_subfondo']."'>".$row['clave_fondo'].".".$row['clave_subfondo']." - ".$row['subfondo']."</option>";
+                    $html.= "<option value='".$row['id_subfondo']."'>".$row['clave_subfondo']." - ".$row['subfondo']."</option>";
                 }
                 echo $html;
             }    

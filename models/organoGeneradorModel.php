@@ -2,6 +2,28 @@
     class organoGenerador extends Conectar
     {
 
+        public function GetOrganosGeneradores()
+        {
+            $conectar= parent::conexion("gestion_documental");
+            parent::set_names();
+
+            $sql="SELECT
+                    id_organo,
+                    clave_organo,
+                    organo_generador,
+                    seccion,
+                    activo_organo
+                FROM cat_organo_generador";
+
+            $sql=$conectar->prepare($sql);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+
+
+
+
         public function GetOrganoGeneradorComboBox()
         {
             $conectar= parent::conexion("gestion_documental");

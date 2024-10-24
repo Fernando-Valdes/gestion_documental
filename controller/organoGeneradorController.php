@@ -4,8 +4,69 @@
     $organoGenerador = new organoGenerador();
     $html = "";
 
+
     switch($_GET["opcion"])
     {
+        case "GetOrganosGeneradores":
+            $datos=$organoGenerador->GetOrganosGeneradores();
+            $data= Array();
+
+            foreach($datos as $row)
+            {
+                $sub_array = array();
+                $sub_array[] = $row["clave_organo"];
+                $sub_array[] = $row["seccion"];
+                $sub_array[] = $row["organo_generador"];
+
+
+                if($row["activo_organo"] == "0")
+                {
+                    $sub_array[] = '<span class="label label-pill label-warning">Inactivo</span>';
+
+                    $sub_array[] = '<button type="button" onClick="editar('.$row["id_organo"].');"  id="'.$row["id_organo"].'" class="btn btn-inline btn-warning btn-sm ladda-button"><i class="fa fa-edit"></i></button>'.
+                                            '<button type="button" onClick="Activar('.$row["id_organo"].');"  id="'.$row["id_organo"].'" class="btn btn-inline btn-success btn-sm ladda-button"><i class="glyphicon glyphicon-ok"></i></button>'.
+                                            '<button type="button" onClick="ver('.$row["id_organo"].');"  id="'.$row["id_organo"].'" class="btn btn-inline btn-primary btn-sm ladda-button"><i class="fa fa-eye"></i></button>';
+                }
+                else
+                {
+                    $sub_array[] = '<span class="label label-pill label-success">Activo</span>';
+
+                    $sub_array[] = '<button type="button" onClick="editar('.$row["id_organo"].');"  id="'.$row["id_organo"].'" class="btn btn-inline btn-warning btn-sm ladda-button"><i class="fa fa-edit"></i></button>'.
+                    '<button type="button" onClick="Desactivar('.$row["id_organo"].');"  id="'.$row["id_organo"].'" class="btn btn-inline btn-danger btn-sm ladda-button"><i class="glyphicon glyphicon-remove"></i></button>'.
+                    '<button type="button" onClick="ver('.$row["id_organo"].');"  id="'.$row["id_organo"].'" class="btn btn-inline btn-primary btn-sm ladda-button"><i class="fa fa-eye"></i></button>';
+                }
+                $data[] = $sub_array;
+            }
+                
+
+            $results = array(
+                "sEcho"=>1,
+                "iTotalRecords"=>count($data),
+                "iTotalDisplayRecords"=>count($data),
+                "aaData"=>$data);
+            echo json_encode($results);
+
+        break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         case "GetOrganoGeneradorComboBox":
             $datos = $organoGenerador->GetOrganoGeneradorComboBox();
             if(is_array($datos)==true and count($datos)>0)
@@ -53,13 +114,5 @@
             }   
         break;
 
-        case "Guardar":  
-        break;
-
-        case "Editar":  
-        break;
-
-        case "Noactivo":  
-        break;
     }
 ?>
